@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070b14" />
+  <meta name="color-scheme" content="dark" />
+  <noscript>
+    <style>
+      /* If JS is disabled, never leave reveal-animated content hidden */
+      .reveal { opacity: 1 !important; transform: none !important; }
+      #mobileMenu { display: none !important; }
+    </style>
+  </noscript>
+  <title>Mithun Hasan — Full-Stack Web Developer &amp; UI/UX Designer | PHP &amp; Laravel</title>
+  <meta name="description"
+    content="Full-Stack Web Developer &amp; UI/UX Designer specialized in PHP &amp; Laravel backend architecture. Crafting scalable server architectures, secure RESTful APIs, and pixel-perfect digital experiences." />
+  <meta name="author" content="Mithun Hasan" />
+  <meta name="keywords"
+    content="PHP, Laravel, Full-Stack Developer, UI/UX Designer, RESTful API, MySQL, PostgreSQL, Redis, Tailwind CSS, Blade, Docker" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mithun Hasan — PHP &amp; Laravel Full-Stack Developer &amp; UI/UX Designer" />
+  <meta property="og:description" content="Robust PHP &amp; Laravel backend systems + modern UI/UX product design." />
+  <meta property="og:site_name" content="Mithun Hasan Portfolio" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mithun Hasan — PHP &amp; Laravel Full-Stack Developer &amp; UI/UX Designer" />
+  <meta name="twitter:description" content="Robust PHP &amp; Laravel backend systems + modern UI/UX product design." />
+
+  <!-- Inline SVG favicon (self-contained) -->
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23070b14'/%3E%3Ctext x='50' y='68' font-size='54' font-family='monospace' font-weight='700' text-anchor='middle' fill='%2310b981'%3EM%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CSS (Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: { 950: '#05080f', 900: '#070b14', 850: '#0a101d', 800: '#0d1526', 700: '#131f38' },
+            neon: { DEFAULT: '#10b981', soft: '#34d399', teal: '#2dd4bf', cyan: '#22d3ee' }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Sora', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'monospace']
+          },
+          boxShadow: {
+            glow: '0 0 0 1px rgba(16,185,129,.35), 0 12px 40px -12px rgba(16,185,129,.55)',
+            card: '0 20px 50px -20px rgba(0,0,0,.85)'
+          },
+          backgroundImage: {
+            'grid-dark': "linear-gradient(rgba(148,163,184,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.06) 1px, transparent 1px)",
+            'radial-fade': 'radial-gradient(circle at center, rgba(16,185,129,.18), transparent 70%)'
+          },
+          backgroundSize: { grid: '44px 44px' },
+          keyframes: {
+            floaty: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-14px)' } },
+            drift: { '0%,100%': { transform: 'translate3d(0,0,0) scale(1)' }, '33%': { transform: 'translate3d(30px,-30px,0) scale(1.08)' }, '66%': { transform: 'translate3d(-25px,18px,0) scale(.95)' } },
+            marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+            pulseRing: { '0%': { transform: 'scale(.9)', opacity: '.7' }, '70%': { transform: 'scale(1.5)', opacity: '0' }, '100%': { opacity: '0' } },
+            blink: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0' } }
+          },
+          animation: {
+            floaty: 'floaty 6s ease-in-out infinite',
+            drift: 'drift 18s ease-in-out infinite',
+            marquee: 'marquee 26s linear infinite',
+            pulseRing: 'pulseRing 2.4s cubic-bezier(.4,0,.2,1) infinite',
+            blink: 'blink 1s step-end infinite'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    html {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #070b14;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: rgba(16, 185, 129, .32);
+      color: #ecfdf5;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #05080f;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #059669, #134e4a);
+      border-radius: 999px;
+      border: 2px solid #05080f;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #10b981;
+    }
+
+    .glass {
+      background: rgba(10, 16, 29, .62);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+    }
+
+    .glass-strong {
+      background: rgba(10, 16, 29, .86);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+    }
+
+    .text-gradient {
+      background: linear-gradient(100deg, #34d399 0%, #2dd4bf 42%, #22d3ee 72%, #34d399 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .border-gradient {
+      position: relative;
+      background-clip: padding-box;
+      border: 1px solid transparent;
+    }
+
+    .border-gradient::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(16, 185, 129, .55), rgba(45, 212, 191, .08) 45%, rgba(34, 211, 238, .45));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .mask-fade-x {
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .8s cubic-bezier(.16, 1, .3, 1), transform .8s cubic-bezier(.16, 1, .3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .reveal[data-delay="1"] {
+      transition-delay: .08s;
+    }
+
+    .reveal[data-delay="2"] {
+      transition-delay: .16s;
+    }
+
+    .reveal[data-delay="3"] {
+      transition-delay: .24s;
+    }
+
+    .reveal[data-delay="4"] {
+      transition-delay: .32s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+
+      .animate-drift,
+      .animate-floaty,
+      .animate-marquee,
+      .animate-pulseRing {
+        animation: none !important;
+      }
+    }
+
+    /* Navigation */
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 5px;
+      height: 2px;
+      width: 0;
+      transform: translateX(-50%);
+      border-radius: 2px;
+      background: linear-gradient(90deg, #34d399, #22d3ee);
+      transition: width .3s cubic-bezier(.16, 1, .3, 1);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.is-active::after {
+      width: 58%;
+    }
+
+    .nav-link.is-active {
+      color: #ffffff;
+    }
+
+    /* Marquee */
+    .marquee-track {
+      display: flex;
+      width: max-content;
+    }
+
+    .marquee-viewport:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    /* Project filters */
+    .filter-btn.is-active {
+      background-image: linear-gradient(90deg, #34d399, #2dd4bf);
+      color: #05080f;
+      font-weight: 600;
+      border-color: transparent;
+      box-shadow: 0 10px 30px -12px rgba(16, 185, 129, .7);
+    }
+
+    .project-card.is-hidden {
+      display: none;
+    }
+
+    .project-card.is-filtering {
+      animation: cardIn .5s cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Tilt card */
+    .tilt {
+      transform-style: preserve-3d;
+      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+    }
+      /* Anchor offset for the fixed navbar */
+    section[id], main[id] { scroll-margin-top: 96px; }
+
+    /* UI/UX preview segmented tabs */
+    .ui-tab { color: #94a3b8; }
+    .ui-tab.is-active { background-color: rgba(16,185,129,.16); color: #34d399; box-shadow: inset 0 0 0 1px rgba(16,185,129,.28); }
+  </style>
+</head>
+
+<body class="font-sans antialiased">
+  <!-- ================= SVG ICON SPRITE ================= -->
+  <svg width="0" height="0" class="hidden" aria-hidden="true" focusable="false">
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7.5 8 5.5 8-5.5"/></g></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
+    <symbol id="i-telegram" viewBox="0 0 24 24"><path fill="currentColor" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 10 14"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></g></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></g></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></g></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7Z"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><path d="m6.3 6.3 2.8 2.8M14.9 14.9l2.8 2.8M17.7 6.3l-2.8 2.8M9.1 14.9l-2.8 2.8"/></g></symbol>
+  </svg>
+
+  <!-- ================= AMBIENT BACKGROUND ================= -->
+  <div aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute inset-0 bg-grid-dark bg-grid opacity-[.55]"></div>
+    <div
+      class="absolute -left-40 -top-40 h-[36rem] w-[36rem] rounded-full bg-emerald-500/10 blur-[130px] animate-drift">
+    </div>
+    <div class="absolute -right-40 top-1/4 h-[32rem] w-[32rem] rounded-full bg-cyan-500/10 blur-[130px] animate-drift"
+      style="animation-delay:-6s"></div>
+    <div class="absolute bottom-0 left-1/3 h-[28rem] w-[28rem] rounded-full bg-teal-500/10 blur-[130px] animate-drift"
+      style="animation-delay:-12s"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-ink-950/40 via-transparent to-ink-950"></div>
+  </div>
+
+  <!-- ================= SCROLL PROGRESS ================= -->
+  <div id="scrollProgress"
+    class="fixed left-0 top-0 z-[70] h-[3px] w-0 rounded-r-full bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 shadow-[0_0_14px_rgba(16,185,129,.85)] transition-[width] duration-100 ease-out">
+  </div>
+
+  <a href="#main"
+    class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[80] focus:rounded-lg focus:bg-emerald-500 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-950">Skip
+    to content</a>
+
+  <!-- ================= NAVBAR ================= -->
+  <header id="navbar" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Primary">
+      <div id="navShell"
+        class="mt-3 flex items-center justify-between rounded-2xl border border-white/5 px-3 py-2.5 transition-all duration-300 sm:px-5">
+        <a href="#home" class="group flex items-center gap-3" aria-label="Mithun Hasan — home">
+          <span
+            class="relative grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 font-display text-sm font-extrabold text-ink-950 shadow-glow">
+            MH
+            <span class="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/25"></span>
+          </span>
+          <span class="hidden leading-tight sm:block">
+            <span class="block font-display text-sm font-bold tracking-wide text-white">Mithun Hasan</span>
+            <span class="block font-mono text-[10px] uppercase tracking-[.18em] text-emerald-400/80">PHP · Laravel ·
+              UI/UX</span>
+          </span>
+        </a>
+
+        <ul class="hidden items-center gap-1 lg:flex">
+          <li><a href="#home"
+              class="nav-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              data-nav>Home</a></li>
+          <li><a href="#about"
+              class="nav-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              data-nav>About</a></li>
+          <li><a href="#skills"
+              class="nav-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              data-nav>Skills</a></li>
+          <li><a href="#projects"
+              class="nav-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              data-nav>Projects</a></li>
+          <li><a href="#uiux"
+              class="nav-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              data-nav>UI/UX</a></li>
+          <li><a href="#contact"
+              class="nav-link block rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:text-white"
+              data-nav>Contact</a></li>
+        </ul>
+        <div class="flex items-center gap-2">
+          <a href="#contact"
+            class="group relative hidden overflow-hidden rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-sm font-semibold text-ink-950 shadow-glow transition-transform duration-300 hover:scale-[1.04] active:scale-95 sm:inline-flex">
+            <span class="relative z-10 flex items-center gap-2">
+              Hire Me
+              <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </a>
+          <button id="menuBtn" type="button"
+            class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-200 transition hover:bg-white/10 lg:hidden"
+            aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+            <svg id="menuIconOpen" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+            <svg id="menuIconClose" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu"
+        class="glass-strong mt-2 hidden overflow-hidden rounded-2xl border border-white/10 lg:hidden">
+        <ul class="divide-y divide-white/5 p-2">
+          <li><a href="#home"
+              class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-emerald-300"
+              data-mobile-link>Home</a></li>
+          <li><a href="#about"
+              class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-emerald-300"
+              data-mobile-link>About</a></li>
+          <li><a href="#skills"
+              class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-emerald-300"
+              data-mobile-link>Skills</a></li>
+          <li><a href="#projects"
+              class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-emerald-300"
+              data-mobile-link>Projects</a></li>
+          <li><a href="#uiux"
+              class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-emerald-300"
+              data-mobile-link>UI/UX</a></li>
+          <li><a href="#contact"
+              class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-emerald-300"
+              data-mobile-link>Contact</a></li>
+        </ul>
+        <div class="p-3 pt-0">
+          <a href="#contact"
+            class="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-3 text-sm font-semibold text-ink-950"
+            data-mobile-link>Hire Me
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section id="home" class="relative isolate overflow-hidden pb-20 pt-32 sm:pt-36 lg:pb-28 lg:pt-44">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid items-center gap-14 lg:grid-cols-12">
+          <!-- Left -->
+          <div class="lg:col-span-7">
+            <div
+              class="reveal inline-flex items-center gap-2.5 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3.5 py-1.5 text-xs font-medium text-emerald-300">
+              <span class="relative flex h-2 w-2">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 animate-pulseRing"></span>
+                <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+              </span>
+              Available for freelance &amp; full-time roles
+            </div>
+
+            <h1
+              class="reveal mt-6 font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl"
+              data-delay="1">
+              Robust <span class="text-gradient">PHP &amp; Laravel</span> Backend Systems
+              <span class="mt-2 block text-2xl font-bold text-slate-300 sm:text-3xl lg:text-[2.35rem]">
+                &amp; Modern <span class="text-gradient">UI/UX</span> Product Design
+              </span>
+            </h1>
+
+            <p class="reveal mt-6 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg" data-delay="2">
+              Crafting scalable server architectures, secure RESTful APIs, and pixel-perfect digital experiences — from
+              database schema to the last rounded corner.
+            </p>
+
+            <div class="reveal mt-9 flex flex-wrap items-center gap-3" data-delay="3">
+              <a href="#projects"
+                class="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-6 py-3.5 text-sm font-semibold text-ink-950 shadow-glow transition-transform duration-300 hover:scale-[1.03] active:scale-95">
+                View Projects
+                <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+              <a href="#contact"
+                class="group inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-6 py-3.5 text-sm font-semibold text-slate-100 backdrop-blur transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10 hover:text-white active:scale-95">
+                <svg class="h-4 w-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 5h16v14H4z" />
+                  <path d="m4 7 8 6 8-6" />
+                </svg>
+                Get in Touch
+              </a>
+            </div>
+            <div class="reveal mt-9 flex flex-wrap items-center gap-3" data-delay="4">
+              <span class="font-mono text-[11px] uppercase tracking-[.2em] text-slate-500">Find me</span>
+              <span class="h-px w-6 bg-white/15"></span>
+              <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer"
+                aria-label="GitHub profile"
+                class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/40 hover:text-emerald-300">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                </svg>
+              </a>
+              <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+                class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/40 hover:text-emerald-300">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
+                </svg>
+              </a>
+              <a href="mailto:hello@mithunhasan.dev" aria-label="Send an email"
+                class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/40 hover:text-emerald-300">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="5" width="18" height="14" rx="2.5" />
+                  <path d="m4 7.5 8 5.5 8-5.5" />
+                </svg>
+              </a>
+            </div>
+
+            <dl class="reveal mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-white/5 pt-8">
+              <div>
+                <dt class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Experience</dt>
+                <dd class="mt-1 font-display text-2xl font-bold text-white"><span data-count="4">0</span>+<span
+                    class="sr-only"> years</span></dd>
+              </div>
+              <div>
+                <dt class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Projects</dt>
+                <dd class="mt-1 font-display text-2xl font-bold text-white"><span data-count="45">0</span>+<span
+                    class="sr-only"> shipped</span></dd>
+              </div>
+              <div>
+                <dt class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">APIs Built</dt>
+                <dd class="mt-1 font-display text-2xl font-bold text-white"><span data-count="60">0</span>+<span
+                    class="sr-only"> endpoints</span></dd>
+              </div>
+            </dl>
+          </div>
+          <!-- Right -->
+          <div class="reveal lg:col-span-5" data-delay="2">
+            <div class="relative mx-auto max-w-md lg:mx-0 lg:max-w-none">
+              <div class="absolute -inset-8 -z-10 rounded-[2.5rem] bg-radial-fade blur-2xl"></div>
+
+              <div class="absolute -left-3 -top-4 z-20 hidden animate-floaty sm:block" style="animation-delay:-1.5s">
+                <span
+                  class="glass-strong inline-flex items-center gap-2 rounded-xl border border-emerald-400/30 px-3 py-2 font-mono text-[11px] font-medium text-emerald-300 shadow-card">
+                  <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Laravel 11
+                </span>
+              </div>
+              <div class="absolute -right-2 top-1/3 z-20 hidden animate-floaty sm:block" style="animation-delay:-3s">
+                <span
+                  class="glass-strong inline-flex items-center gap-2 rounded-xl border border-cyan-400/30 px-3 py-2 font-mono text-[11px] font-medium text-cyan-300 shadow-card">
+                  <span class="h-1.5 w-1.5 rounded-full bg-cyan-400"></span> REST API
+                </span>
+              </div>
+              <div class="absolute -bottom-4 left-8 z-20 hidden animate-floaty sm:block" style="animation-delay:-4.5s">
+                <span
+                  class="glass-strong inline-flex items-center gap-2 rounded-xl border border-teal-400/30 px-3 py-2 font-mono text-[11px] font-medium text-teal-300 shadow-card">
+                  <span class="h-1.5 w-1.5 rounded-full bg-teal-400"></span> Redis Queue
+                </span>
+              </div>
+
+              <div class="border-gradient overflow-hidden rounded-2xl bg-ink-850/85 shadow-card backdrop-blur-xl">
+                <div class="flex items-center gap-2 border-b border-white/5 bg-white/[.02] px-4 py-3">
+                  <span class="h-3 w-3 rounded-full bg-red-400/80"></span>
+                  <span class="h-3 w-3 rounded-full bg-amber-400/80"></span>
+                  <span class="h-3 w-3 rounded-full bg-emerald-400/80"></span>
+                  <span
+                    class="ml-2 truncate font-mono text-[11px] text-slate-500">app/Http/Controllers/ProjectController.php</span>
+                </div>
+                <pre class="overflow-x-auto p-5 font-mono text-[12.5px] leading-relaxed text-slate-300"><code><span class="text-slate-500">&lt;?php</span>
+
+<span class="text-fuchsia-400">namespace</span> App\Http\Controllers;
+
+<span class="text-fuchsia-400">use</span> App\Models\Project;
+<span class="text-fuchsia-400">use</span> Illuminate\Http\JsonResponse;
+
+<span class="text-fuchsia-400">class</span> <span class="text-cyan-300">ProjectController</span> <span class="text-fuchsia-400">extends</span> Controller
+{
+    <span class="text-fuchsia-400">public function</span> <span class="text-emerald-300">index</span>(): JsonResponse
+    {
+        <span class="text-slate-500">// Cached, paginated, eager-loaded.</span>
+        <span class="text-fuchsia-400">return</span> response()<span class="text-slate-400">-&gt;</span>json(
+            Project::<span class="text-emerald-300">query</span>()
+                <span class="text-slate-400">-&gt;</span><span class="text-emerald-300">where</span>(<span class="text-amber-300">'published'</span>, <span class="text-fuchsia-400">true</span>)
+                <span class="text-slate-400">-&gt;</span><span class="text-emerald-300">with</span>(<span class="text-amber-300">'tags'</span>)
+                <span class="text-slate-400">-&gt;</span><span class="text-emerald-300">latest</span>()
+                <span class="text-slate-400">-&gt;</span><span class="text-emerald-300">paginate</span>(<span class="text-orange-300">12</span>)
+        );
+    }
+}</code></pre>
+                <div
+                  class="flex flex-wrap items-center gap-4 border-t border-white/5 bg-white/[.02] px-5 py-3 font-mono text-[11px] text-slate-500">
+                  <span class="flex items-center gap-1.5"><span
+                      class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>200 OK</span>
+                  <span>~118ms</span>
+                  <span class="hidden sm:inline">Redis cache: HIT</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= TECH MARQUEE ================= -->
+    <div class="marquee-viewport mask-fade-x relative border-y border-white/5 bg-white/[.015] py-5" aria-hidden="true">
+      <div class="marquee-track animate-marquee items-center">
+        <div class="flex shrink-0 items-center">
+          <span class="mx-6 font-mono text-sm text-slate-500">PHP</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Laravel</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">MySQL</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">PostgreSQL</span><span
+            class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Redis</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Tailwind CSS</span><span
+            class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Blade</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Alpine.js</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">REST API</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Docker</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Figma</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Git</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Livewire</span><span class="text-emerald-500/40">◆</span>
+        </div>
+        <div class="flex shrink-0 items-center">
+          <span class="mx-6 font-mono text-sm text-slate-500">PHP</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Laravel</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">MySQL</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">PostgreSQL</span><span
+            class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Redis</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Tailwind CSS</span><span
+            class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Blade</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Alpine.js</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">REST API</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Docker</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Figma</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Git</span><span class="text-emerald-500/40">◆</span>
+          <span class="mx-6 font-mono text-sm text-slate-500">Livewire</span><span class="text-emerald-500/40">◆</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-14 lg:grid-cols-12 lg:items-start">
+          <div class="lg:col-span-5">
+            <p class="reveal font-mono text-xs uppercase tracking-[.25em] text-emerald-400">01 — About</p>
+            <h2 class="reveal mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl"
+              data-delay="1">
+              Engineer's mindset, <span class="text-gradient">designer's eye</span>.
+            </h2>
+            <p class="reveal mt-6 text-base leading-relaxed text-slate-400" data-delay="2">
+              I'm <strong class="font-semibold text-slate-200">Mithun Hasan</strong>, a full-stack developer and UI/UX
+              designer who builds
+              production-grade web applications end to end. My core strength is <strong
+                class="font-semibold text-slate-200">PHP &amp; Laravel backend architecture</strong> —
+              designing normalized database schemas, domain-driven service layers, secure authentication, and RESTful
+              APIs that stay fast under load.
+            </p>
+            <p class="reveal mt-4 text-base leading-relaxed text-slate-400" data-delay="3">
+              On the surface, I care deeply about clarity: meaningful typography, calm spacing, accessible components
+              and interfaces that feel
+              effortless on a phone. Backend reliability and front-end polish are not separate jobs — they're one
+              product.
+            </p>
+            <ul class="reveal mt-8 space-y-3.5" data-delay="4">
+              <li class="flex items-start gap-3 text-sm text-slate-300">
+                <span
+                  class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-emerald-400/12 text-emerald-400">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                End-to-end delivery — database schema, API layer, and interface.
+              </li>
+              <li class="flex items-start gap-3 text-sm text-slate-300">
+                <span
+                  class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-emerald-400/12 text-emerald-400">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                Clean, testable and framework-idiomatic Laravel code.
+              </li>
+              <li class="flex items-start gap-3 text-sm text-slate-300">
+                <span
+                  class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-emerald-400/12 text-emerald-400">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                Performance, security and accessibility treated as defaults, not extras.
+              </li>
+              <li class="flex items-start gap-3 text-sm text-slate-300">
+                <span
+                  class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-md bg-emerald-400/12 text-emerald-400">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                Clear async communication and well-documented handover.
+              </li>
+            </ul>
+          </div>
+
+          <div class="reveal lg:col-span-7" data-delay="2">
+            <div
+              class="border-gradient relative overflow-hidden rounded-3xl bg-ink-850/60 p-6 shadow-card backdrop-blur-xl sm:p-8">
+              <div class="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-emerald-500/10 blur-3xl"></div>
+              <div class="flex items-center gap-4">
+                <div
+                  class="relative grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 font-display text-2xl font-extrabold text-ink-950">
+                  MH
+                  <span class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/25"></span>
+                </div>
+                <div class="min-w-0">
+                  <p class="font-display text-lg font-bold text-white">Mithun Hasan</p>
+                  <p class="text-sm text-slate-400">Full-Stack Developer &amp; UI/UX Designer</p>
+                  <p class="mt-1 flex items-center gap-1.5 font-mono text-[11px] text-emerald-400">
+                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Remote · Worldwide
+                  </p>
+                </div>
+              </div>
+
+              <dl class="mt-8 grid grid-cols-2 gap-4">
+                <div
+                  class="rounded-2xl border border-white/5 bg-white/[.02] p-4 transition hover:border-emerald-400/25 hover:bg-emerald-400/[.04]">
+                  <dt class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Primary Focus</dt>
+                  <dd class="mt-1.5 text-sm font-semibold text-slate-200">Laravel Backend</dd>
+                </div>
+                <div
+                  class="rounded-2xl border border-white/5 bg-white/[.02] p-4 transition hover:border-emerald-400/25 hover:bg-emerald-400/[.04]">
+                  <dt class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Databases</dt>
+                  <dd class="mt-1.5 text-sm font-semibold text-slate-200">MySQL · PostgreSQL · Redis</dd>
+                </div>
+                <div
+                  class="rounded-2xl border border-white/5 bg-white/[.02] p-4 transition hover:border-emerald-400/25 hover:bg-emerald-400/[.04]">
+                  <dt class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Design Tools</dt>
+                  <dd class="mt-1.5 text-sm font-semibold text-slate-200">Figma · Design Systems</dd>
+                </div>
+                <div
+                  class="rounded-2xl border border-white/5 bg-white/[.02] p-4 transition hover:border-emerald-400/25 hover:bg-emerald-400/[.04]">
+                  <dt class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Workflow</dt>
+                  <dd class="mt-1.5 text-sm font-semibold text-slate-200">Git · Docker · Linux</dd>
+                </div>
+              </dl>
+
+              <div class="mt-6 flex flex-wrap items-center gap-2">
+                <span
+                  class="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-slate-300">English</span>
+                <span
+                  class="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-slate-300">Bengali</span>
+                <span
+                  class="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[11px] text-slate-300">Urdu</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= SKILLS / EXPERTISE ================= -->
+    <section id="skills" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="reveal font-mono text-xs uppercase tracking-[.25em] text-emerald-400">02 — Expertise</p>
+          <h2 class="reveal mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl" data-delay="1">
+            Core Expertise &amp; <span class="text-gradient">Tech Stack</span>
+          </h2>
+          <p class="reveal mt-4 text-base leading-relaxed text-slate-400" data-delay="2">
+            A focused toolkit spanning server architecture, templating, product design and the workflow that ships it
+            all.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-5 sm:grid-cols-2">
+          <!-- Backend -->
+          <article
+            class="reveal group relative overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 p-6 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-emerald-400/30">
+            <div
+              class="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-emerald-500/0 blur-3xl transition duration-500 group-hover:bg-emerald-500/20">
+            </div>
+            <div class="relative flex items-center gap-3">
+              <span
+                class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-emerald-400/10 text-emerald-400 ring-1 ring-inset ring-emerald-400/20">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="5" rx="8" ry="3" />
+                  <path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5" />
+                  <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" />
+                </svg>
+              </span>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">Backend Engineering</h3>
+                <p class="font-mono text-[11px] uppercase tracking-[.18em] text-emerald-400/70">Architecture · APIs ·
+                  Data</p>
+              </div>
+            </div>
+            <p class="relative mt-4 text-sm leading-relaxed text-slate-400">
+              Robust server-side systems: domain modelling, Eloquent relationships, authentication, background queues
+              and subscription billing.
+            </p>
+            <ul class="relative mt-5 flex flex-wrap gap-2">
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Core PHP</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Laravel MVC</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Eloquent</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Auth / Sanctum</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Queues &amp; Jobs</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Laravel Cashier</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                RESTful APIs</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                MySQL</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                PostgreSQL</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Redis</li>
+            </ul>
+          </article>
+          <!-- Frontend -->
+          <article
+            class="reveal group relative overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 p-6 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-teal-400/30"
+            data-delay="1">
+            <div
+              class="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-teal-500/0 blur-3xl transition duration-500 group-hover:bg-teal-500/20">
+            </div>
+            <div class="relative flex items-center gap-3">
+              <span
+                class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-teal-400/10 text-teal-300 ring-1 ring-inset ring-teal-400/20">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m16 18 6-6-6-6" />
+                  <path d="m8 6-6 6 6 6" />
+                </svg>
+              </span>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">Frontend &amp; Templates</h3>
+                <p class="font-mono text-[11px] uppercase tracking-[.18em] text-teal-300/70">Markup · Interactivity</p>
+              </div>
+            </div>
+            <p class="relative mt-4 text-sm leading-relaxed text-slate-400">
+              Server-rendered Blade views and lightweight reactive frontends — fast, accessible and consistent on every
+              screen size.
+            </p>
+            <ul class="relative mt-5 flex flex-wrap gap-2">
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Blade Engine</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                JavaScript (ES6+)</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Tailwind CSS</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                HTML5</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Alpine.js</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Vue (basics)</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Responsive Layouts</li>
+            </ul>
+          </article>
+
+          <!-- UI/UX -->
+          <article
+            class="reveal group relative overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 p-6 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-cyan-400/30"
+            data-delay="2">
+            <div
+              class="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-cyan-500/0 blur-3xl transition duration-500 group-hover:bg-cyan-500/20">
+            </div>
+            <div class="relative flex items-center gap-3">
+              <span
+                class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cyan-400/10 text-cyan-300 ring-1 ring-inset ring-cyan-400/20">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m12 2 9 5-9 5-9-5 9-5Z" />
+                  <path d="m3 12 9 5 9-5" />
+                  <path d="m3 17 9 5 9-5" />
+                </svg>
+              </span>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">UI/UX &amp; Product Design</h3>
+                <p class="font-mono text-[11px] uppercase tracking-[.18em] text-cyan-300/70">Research · Systems · Craft
+                </p>
+              </div>
+            </div>
+            <p class="relative mt-4 text-sm leading-relaxed text-slate-400">
+              From user journeys and wireframes to high-fidelity prototypes and reusable design-system components.
+            </p>
+            <ul class="relative mt-5 flex flex-wrap gap-2">
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Wireframing</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                User Journey</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Prototyping</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Figma</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Mobile-First</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Clean Typography</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Design Systems</li>
+            </ul>
+          </article>
+          <!-- DevOps -->
+          <article
+            class="reveal group relative overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 p-6 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-amber-400/30"
+            data-delay="3">
+            <div
+              class="absolute -right-12 -top-12 h-36 w-36 rounded-full bg-amber-500/0 blur-3xl transition duration-500 group-hover:bg-amber-500/15">
+            </div>
+            <div class="relative flex items-center gap-3">
+              <span
+                class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-amber-400/10 text-amber-300 ring-1 ring-inset ring-amber-400/20">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m4 17 6-6-6-6" />
+                  <path d="M12 19h8" />
+                </svg>
+              </span>
+              <div>
+                <h3 class="font-display text-lg font-bold text-white">DevOps &amp; Workflow</h3>
+                <p class="font-mono text-[11px] uppercase tracking-[.18em] text-amber-300/70">Ship · Test · Monitor</p>
+              </div>
+            </div>
+            <p class="relative mt-4 text-sm leading-relaxed text-slate-400">
+              Reliable delivery pipelines and server operations — versioned, containerised and verifiable before it
+              reaches production.
+            </p>
+            <ul class="relative mt-5 flex flex-wrap gap-2">
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Git &amp; GitHub</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Docker</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Linux Servers</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Nginx / Apache</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                Postman</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                API Testing</li>
+              <li
+                class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                CI/CD Basics</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- ================= PROJECTS ================= -->
+    <section id="projects" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="reveal font-mono text-xs uppercase tracking-[.25em] text-emerald-400">03 — Work</p>
+            <h2 class="reveal mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              data-delay="1">
+              Featured Projects &amp; <span class="text-gradient">Case Studies</span>
+            </h2>
+            <p class="reveal mt-4 text-base leading-relaxed text-slate-400" data-delay="2">
+              Production systems built end to end — where backend architecture decisions meet real product requirements.
+            </p>
+          </div>
+          <div class="reveal flex flex-wrap gap-2" id="projectFilters" data-delay="2" role="tablist"
+            aria-label="Filter projects">
+            <button type="button"
+              class="filter-btn is-active rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
+              data-filter="all" aria-pressed="true">All</button>
+            <button type="button"
+              class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
+              data-filter="fintech" aria-pressed="false">Fintech</button>
+            <button type="button"
+              class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
+              data-filter="gaming" aria-pressed="false">Gaming</button>
+            <button type="button"
+              class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
+              data-filter="commerce" aria-pressed="false">E-commerce</button>
+            <button type="button"
+              class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
+              data-filter="saas" aria-pressed="false">SaaS</button>
+          </div>
+        </div>
+
+        <div id="projectGrid" class="mt-12 grid gap-6 md:grid-cols-2">
+          <!-- Project 1 -->
+          <article
+            class="project-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30"
+            data-category="fintech">
+            <div
+              class="relative h-44 overflow-hidden border-b border-white/5 bg-gradient-to-br from-emerald-500/15 via-ink-800 to-cyan-500/10">
+              <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
+              <div class="absolute inset-x-6 bottom-0 flex h-28 items-end gap-2">
+                <span
+                  class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                  style="height:42%"></span>
+                <span
+                  class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                  style="height:68%"></span>
+                <span
+                  class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                  style="height:35%"></span>
+                <span
+                  class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                  style="height:84%"></span>
+                <span
+                  class="w-full rounded-t-md bg-gradient-to-t from-cyan-500/50 to-cyan-400/20 transition-all duration-500 group-hover:from-cyan-400/80"
+                  style="height:58%"></span>
+                <span
+                  class="w-full rounded-t-md bg-gradient-to-t from-cyan-500/50 to-cyan-400/20 transition-all duration-500 group-hover:from-cyan-400/80"
+                  style="height:96%"></span>
+                <span
+                  class="w-full rounded-t-md bg-gradient-to-t from-cyan-500/50 to-cyan-400/20 transition-all duration-500 group-hover:from-cyan-400/80"
+                  style="height:72%"></span>
+              </div>
+              <span
+                class="absolute left-4 top-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">Fintech</span>
+              <span
+                class="absolute right-4 top-4 rounded-lg bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] text-slate-400 backdrop-blur">$2.4M
+                / mo</span>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300">Enterprise
+                  ERP &amp; Fintech Suite</h3>
+                <span class="shrink-0 font-mono text-[11px] text-slate-500">2024</span>
+              </div>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
+                Multi-tenant ERP with a double-entry ledger, automated invoicing, granular roles &amp; permissions, and
+                a fully auditable transaction history.
+              </p>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                <li
+                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                  Laravel</li>
+                <li
+                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                  MySQL</li>
+                <li
+                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                  Redis</li>
+                <li
+                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
+                  Tailwind</li>
+              </ul>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <a href="#"
+                  class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
+                  Live Demo
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 4h6v6" />
+                    <path d="M20 4 10 14" />
+                    <path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4" />
+                  </svg>
+                </a>
+                <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+                    <!-- Project 2 -->
+          <article class="project-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30" data-category="gaming" data-delay="1">
+            <div class="relative h-44 overflow-hidden border-b border-white/5 bg-gradient-to-br from-teal-500/15 via-ink-800 to-emerald-500/10">
+              <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
+              <div class="absolute inset-x-5 top-5 space-y-2">
+                <div class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
+                  <span class="flex items-center gap-2 text-[11px] text-slate-300"><span class="relative flex h-1.5 w-1.5"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 animate-pulseRing"></span><span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span></span>Wolves vs Eagles</span>
+                  <span class="font-mono text-[11px] font-medium text-emerald-300">1.84</span>
+                </div>
+                <div class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
+                  <span class="flex items-center gap-2 text-[11px] text-slate-300"><span class="relative flex h-1.5 w-1.5"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 animate-pulseRing"></span><span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span></span>Titans vs Royals</span>
+                  <span class="font-mono text-[11px] font-medium text-emerald-300">2.07</span>
+                </div>
+                <div class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
+                  <span class="flex items-center gap-2 text-[11px] text-slate-300">Wallet Settlement</span>
+                  <span class="font-mono text-[11px] font-medium text-cyan-300">+0.42s</span>
+                </div>
+              </div>
+              <span class="absolute left-4 bottom-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">Gaming</span>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300">Gaming &amp; Betting Platform</h3>
+                <span class="shrink-0 font-mono text-[11px] text-slate-500">2025</span>
+              </div>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
+                Real-time odds feed with a seamless wallet integration — idempotent balance updates, queued settlement jobs and full transaction reconciliation.
+              </p>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Laravel</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">WebSockets</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Redis</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">MySQL</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Tailwind</li>
+              </ul>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <a href="#" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
+                  Live Demo <svg class="h-3.5 w-3.5"><use href="#i-external" /></svg>
+                </a>
+                <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
+                  <svg class="h-3.5 w-3.5"><use href="#i-github" /></svg> GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+          <!-- Project 3 -->
+          <article class="project-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30" data-category="commerce" data-delay="2">
+            <div class="relative h-44 overflow-hidden border-b border-white/5 bg-gradient-to-br from-cyan-500/15 via-ink-800 to-emerald-500/10">
+              <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
+              <div class="absolute inset-x-5 top-5 grid grid-cols-3 gap-2">
+                <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur"><div class="h-8 rounded bg-gradient-to-br from-emerald-400/30 to-teal-500/20"></div><div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div><div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div></div>
+                <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur"><div class="h-8 rounded bg-gradient-to-br from-cyan-400/30 to-emerald-500/20"></div><div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div><div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div></div>
+                <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur"><div class="h-8 rounded bg-gradient-to-br from-teal-400/30 to-cyan-500/20"></div><div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div><div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div></div>
+              </div>
+              <span class="absolute left-4 bottom-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">E-commerce</span>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300">E-commerce &amp; Booking System</h3>
+                <span class="shrink-0 font-mono text-[11px] text-slate-500">2024</span>
+              </div>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
+                Multi-vendor storefront combined with slot-based booking — inventory reservation, coupon engine, Stripe checkout and invoice PDFs.
+              </p>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Laravel</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Livewire</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Stripe</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">PostgreSQL</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Tailwind</li>
+              </ul>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <a href="#" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
+                  Live Demo <svg class="h-3.5 w-3.5"><use href="#i-external" /></svg>
+                </a>
+                <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
+                  <svg class="h-3.5 w-3.5"><use href="#i-github" /></svg> GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+          <!-- Project 4 -->
+          <article class="project-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30" data-category="saas" data-delay="3">
+            <div class="relative h-44 overflow-hidden border-b border-white/5 bg-gradient-to-br from-emerald-500/15 via-ink-800 to-teal-500/10">
+              <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
+              <div class="absolute inset-x-0 top-5 flex items-center justify-center">
+                <div class="relative h-24 w-24">
+                  <svg viewBox="0 0 100 100" class="h-full w-full -rotate-90">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(148,163,184,.18)" stroke-width="10" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="url(#donutGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="70" class="transition-all duration-700 group-hover:[stroke-dashoffset:45]" />
+                    <defs><linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#34d399" /><stop offset="100%" stop-color="#22d3ee" /></linearGradient></defs>
+                  </svg>
+                  <span class="absolute inset-0 grid place-items-center font-display text-lg font-bold text-white">72%</span>
+                </div>
+              </div>
+              <span class="absolute left-4 bottom-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">SaaS</span>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300">Multi-tenant SaaS Billing</h3>
+                <span class="shrink-0 font-mono text-[11px] text-slate-500">2025</span>
+              </div>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
+                Subscription platform with tiered plans, Laravel Cashier billing, usage metering, webhook sync and a customer-facing billing portal.
+              </p>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Laravel</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Cashier</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Stripe</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Redis</li>
+                <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">Docker</li>
+              </ul>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <a href="#" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
+                  Live Demo <svg class="h-3.5 w-3.5"><use href="#i-external" /></svg>
+                </a>
+                <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
+                  <svg class="h-3.5 w-3.5"><use href="#i-github" /></svg> GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <p id="projectEmpty" class="mt-10 hidden text-center font-mono text-sm text-slate-500">No projects in this category yet.</p>
+      </div>
+    </section>
+    <!-- ================= UI/UX SHOWCASE ================= -->
+    <section id="uiux" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="reveal font-mono text-xs uppercase tracking-[.25em] text-emerald-400">04 — Design</p>
+          <h2 class="reveal mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl" data-delay="1">
+            UI/UX <span class="text-gradient">Showcase</span>
+          </h2>
+          <p class="reveal mt-4 text-base leading-relaxed text-slate-400" data-delay="2">
+            Prototypes, design tokens and interfaces — the part that decides whether a system actually feels good to use.
+          </p>
+        </div>
+
+        <div class="mt-14 grid gap-5 md:grid-cols-6">
+          <!-- Design system -->
+          <article class="reveal group relative overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 p-6 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-emerald-400/30 md:col-span-4">
+            <div class="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-emerald-500/0 blur-3xl transition duration-500 group-hover:bg-emerald-500/15"></div>
+            <div class="relative flex items-start justify-between gap-4">
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-[.18em] text-emerald-400/70">Design System</p>
+                <h3 class="mt-1 font-display text-lg font-bold text-white">Tokens, type scale &amp; components</h3>
+              </div>
+              <span class="shrink-0 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] text-slate-400">Figma</span>
+            </div>
+
+            <div class="relative mt-6">
+              <p class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Palette</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[.03] py-1.5 pl-1.5 pr-3 transition hover:border-emerald-400/30"><span class="h-6 w-6 rounded-lg bg-emerald-400"></span><span class="font-mono text-[11px] text-slate-300">#34D399</span></span>
+                <span class="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[.03] py-1.5 pl-1.5 pr-3 transition hover:border-emerald-400/30"><span class="h-6 w-6 rounded-lg bg-teal-400"></span><span class="font-mono text-[11px] text-slate-300">#2DD4BF</span></span>
+                <span class="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[.03] py-1.5 pl-1.5 pr-3 transition hover:border-emerald-400/30"><span class="h-6 w-6 rounded-lg bg-cyan-400"></span><span class="font-mono text-[11px] text-slate-300">#22D3EE</span></span>
+                <span class="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[.03] py-1.5 pl-1.5 pr-3 transition hover:border-emerald-400/30"><span class="h-6 w-6 rounded-lg bg-ink-800 ring-1 ring-inset ring-white/15"></span><span class="font-mono text-[11px] text-slate-300">#0D1526</span></span>
+              </div>
+            </div>
+
+            <div class="relative mt-6 border-t border-white/5 pt-5">
+              <p class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Type scale</p>
+              <div class="mt-3 space-y-2.5">
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1"><span class="font-display text-2xl font-bold text-white">Aa</span><span class="text-sm text-slate-400">Display · Sora 700 · 36/44</span></div>
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1"><span class="text-lg text-slate-200">Aa</span><span class="text-sm text-slate-400">Body · Inter 400 · 16/26</span></div>
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1"><span class="font-mono text-[13px] text-slate-300">Aa</span><span class="text-sm text-slate-400">Mono · JetBrains 500 · 12/18</span></div>
+              </div>
+            </div>
+
+            <div class="relative mt-6 flex flex-wrap items-center gap-3 border-t border-white/5 pt-5">
+              <span class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2 text-xs font-semibold text-ink-950">Primary</span>
+              <span class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2 text-xs font-semibold text-slate-100">Secondary</span>
+              <span class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-semibold text-emerald-300 underline decoration-emerald-400/40 underline-offset-4">Ghost link</span>
+            </div>
+          </article>
+          <!-- User journey -->
+          <article class="reveal group relative overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 p-6 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-teal-400/30 md:col-span-2" data-delay="1">
+            <p class="font-mono text-[11px] uppercase tracking-[.18em] text-teal-300/70">User Journey</p>
+            <h3 class="mt-1 font-display text-lg font-bold text-white">Wireframe → Prototype</h3>
+            <ol class="mt-6 space-y-4">
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-emerald-400/12 font-mono text-[11px] text-emerald-300 ring-1 ring-inset ring-emerald-400/20">1</span>
+                <span><span class="block text-sm font-semibold text-slate-200">Discover</span><span class="block text-xs text-slate-500">Interviews &amp; competitor teardown</span></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-emerald-400/12 font-mono text-[11px] text-emerald-300 ring-1 ring-inset ring-emerald-400/20">2</span>
+                <span><span class="block text-sm font-semibold text-slate-200">Wireframe</span><span class="block text-xs text-slate-500">Low-fi structure &amp; flow</span></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-emerald-400/12 font-mono text-[11px] text-emerald-300 ring-1 ring-inset ring-emerald-400/20">3</span>
+                <span><span class="block text-sm font-semibold text-slate-200">Prototype</span><span class="block text-xs text-slate-500">Clickable hi-fi in Figma</span></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-emerald-400/12 font-mono text-[11px] text-emerald-300 ring-1 ring-inset ring-emerald-400/20">4</span>
+                <span><span class="block text-sm font-semibold text-slate-200">Handoff</span><span class="block text-xs text-slate-500">Tokens mapped to Tailwind</span></span>
+              </li>
+            </ol>
+            <div class="mt-6 flex items-center gap-2 border-t border-white/5 pt-5 font-mono text-[11px] text-slate-500">
+              <svg class="h-3.5 w-3.5 text-emerald-400"><use href="#i-spark" /></svg> Iterate until it feels obvious
+            </div>
+          </article>
+
+          <!-- Mobile UI preview -->
+          <article class="reveal group relative overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 p-6 shadow-card backdrop-blur-xl transition duration-300 hover:border-cyan-400/30 md:col-span-2" data-delay="2">
+            <p class="font-mono text-[11px] uppercase tracking-[.18em] text-cyan-300/70">Mobile-First</p>
+            <h3 class="mt-1 font-display text-lg font-bold text-white">Interface preview</h3>
+
+            <div class="mt-4 flex rounded-xl border border-white/10 bg-white/[.03] p-1" role="tablist" aria-label="Preview screen">
+              <button type="button" class="ui-tab is-active flex-1 rounded-lg px-3 py-1.5 text-[11px] font-medium text-slate-300 transition" data-screen="home" aria-selected="true">Home</button>
+              <button type="button" class="ui-tab flex-1 rounded-lg px-3 py-1.5 text-[11px] font-medium text-slate-300 transition" data-screen="profile" aria-selected="false">Profile</button>
+            </div>
+
+            <div class="mt-5 flex justify-center">
+              <div class="w-[168px] rounded-[1.6rem] border border-white/12 bg-ink-900 p-2 shadow-card">
+                <div class="relative overflow-hidden rounded-[1.15rem] bg-ink-850 p-3">
+                  <span class="absolute left-1/2 top-1.5 h-1 w-10 -translate-x-1/2 rounded-full bg-white/15"></span>
+                  <div class="mt-3 space-y-2" data-screen-panel="home">
+                    <div class="h-14 rounded-xl bg-gradient-to-br from-emerald-400/35 to-cyan-400/20"></div>
+                    <div class="h-2.5 w-3/4 rounded-full bg-white/15"></div>
+                    <div class="h-2.5 w-1/2 rounded-full bg-white/10"></div>
+                    <div class="grid grid-cols-2 gap-2 pt-1">
+                      <div class="h-10 rounded-lg border border-white/8 bg-white/[.03]"></div>
+                      <div class="h-10 rounded-lg border border-emerald-400/25 bg-emerald-400/10"></div>
+                    </div>
+                  </div>
+                  <div class="mt-3 hidden space-y-2" data-screen-panel="profile">
+                    <div class="flex items-center gap-2">
+                      <div class="h-9 w-9 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600"></div>
+                      <div class="flex-1 space-y-1.5"><div class="h-2.5 w-2/3 rounded-full bg-white/15"></div><div class="h-2 w-1/3 rounded-full bg-white/10"></div></div>
+                    </div>
+                    <div class="h-2.5 w-full rounded-full bg-white/10"></div>
+                    <div class="h-2.5 w-5/6 rounded-full bg-white/10"></div>
+                    <div class="h-10 rounded-lg border border-cyan-400/25 bg-cyan-400/10"></div>
+                    <div class="h-2.5 w-1/2 rounded-full bg-white/10"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <!-- Component library -->
+          <article class="reveal group relative overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 p-6 shadow-card backdrop-blur-xl transition duration-300 hover:border-emerald-400/30 md:col-span-4" data-delay="3">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-mono text-[11px] uppercase tracking-[.18em] text-emerald-400/70">Component Library</p>
+                <h3 class="mt-1 font-display text-lg font-bold text-white">States, inputs &amp; feedback</h3>
+              </div>
+              <span class="shrink-0 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] text-slate-400">30+ variants</span>
+            </div>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              <div>
+                <label class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500" for="uiuxDemoInput">Input · focus</label>
+                <input id="uiuxDemoInput" type="text" placeholder="you@company.com" class="mt-2 w-full rounded-xl border border-white/10 bg-ink-900/70 px-3.5 py-2.5 text-sm text-slate-200 placeholder:text-slate-600 outline-none transition focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/25" />
+                <div class="mt-3 flex flex-wrap items-center gap-2">
+                  <button type="button" class="rounded-lg bg-emerald-400/15 px-2.5 py-1 font-mono text-[11px] text-emerald-300 ring-1 ring-inset ring-emerald-400/25">Active</button>
+                  <button type="button" class="rounded-lg bg-white/5 px-2.5 py-1 font-mono text-[11px] text-slate-400 ring-1 ring-inset ring-white/10">Default</button>
+                  <button type="button" class="rounded-lg bg-white/[.02] px-2.5 py-1 font-mono text-[11px] text-slate-600 ring-1 ring-inset ring-white/5 line-through">Disabled</button>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <p class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Toggle</p>
+                  <div class="mt-2 flex items-center gap-3">
+                    <button type="button" id="demoToggle" class="relative h-6 w-11 shrink-0 rounded-full bg-white/10 transition-colors duration-300" role="switch" aria-checked="false" aria-label="Sample toggle">
+                      <span class="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all duration-300"></span>
+                    </button>
+                    <span class="text-xs text-slate-400">Enable two-factor auth</span>
+                  </div>
+                </div>
+                <div>
+                  <p class="font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Progress</p>
+                  <div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-white/8">
+                    <div class="h-full w-4/5 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 transition-all duration-700 group-hover:w-[86%]"></div>
+                  </div>
+                  <p class="mt-1.5 font-mono text-[10px] text-slate-500">API coverage 80%</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-5">
+              <div class="flex items-center gap-2">
+                <span class="rounded-lg bg-emerald-400/12 px-2.5 py-1 text-[11px] font-medium text-emerald-300 ring-1 ring-inset ring-emerald-400/20">Success</span>
+                <span class="rounded-lg bg-amber-400/12 px-2.5 py-1 text-[11px] font-medium text-amber-300 ring-1 ring-inset ring-amber-400/20">Pending</span>
+                <span class="rounded-lg bg-rose-400/12 px-2.5 py-1 text-[11px] font-medium text-rose-300 ring-1 ring-inset ring-rose-400/20">Failed</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 font-mono text-[10px] text-ink-950 ring-2 ring-ink-900">MH</span>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-emerald-500 font-mono text-[10px] text-ink-950 ring-2 ring-ink-900">AK</span>
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-white/10 font-mono text-[10px] text-slate-300 ring-2 ring-ink-900">+7</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <!-- ================= CONTACT ================= -->
+    <section id="contact" class="relative py-20 sm:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <!-- Left: intro + direct links -->
+          <div class="lg:col-span-5">
+            <p class="reveal font-mono text-xs uppercase tracking-[.25em] text-emerald-400">05 — Contact</p>
+            <h2 class="reveal mt-3 font-display text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl" data-delay="1">
+              Let's build something <span class="text-gradient">solid</span>.
+            </h2>
+            <p class="reveal mt-5 text-base leading-relaxed text-slate-400" data-delay="2">
+              Got a Laravel project, a messy backend, or a product that needs a proper interface? Tell me what you're building —
+              I usually reply within one business day.
+            </p>
+
+            <div class="mt-9 space-y-3">
+              <a href="mailto:hello@mithunhasan.dev" class="reveal group flex items-center gap-4 rounded-2xl border border-white/5 bg-ink-850/50 p-4 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/30">
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-emerald-400/10 text-emerald-400 ring-1 ring-inset ring-emerald-400/20">
+                  <svg class="h-5 w-5"><use href="#i-mail" /></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Email</span>
+                  <span class="block truncate text-sm font-semibold text-slate-200 transition group-hover:text-emerald-300">hello@mithunhasan.dev</span>
+                </span>
+                <svg class="ml-auto h-4 w-4 shrink-0 text-slate-600 transition group-hover:translate-x-0.5 group-hover:text-emerald-400"><use href="#i-arrow-right" /></svg>
+              </a>
+
+              <a href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer" class="reveal group flex items-center gap-4 rounded-2xl border border-white/5 bg-ink-850/50 p-4 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/30" data-delay="1">
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-emerald-400/10 text-emerald-400 ring-1 ring-inset ring-emerald-400/20">
+                  <svg class="h-5 w-5"><use href="#i-whatsapp" /></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">WhatsApp</span>
+                  <span class="block truncate text-sm font-semibold text-slate-200 transition group-hover:text-emerald-300">Chat directly</span>
+                </span>
+                <svg class="ml-auto h-4 w-4 shrink-0 text-slate-600 transition group-hover:translate-x-0.5 group-hover:text-emerald-400"><use href="#i-arrow-right" /></svg>
+              </a>
+
+              <a href="https://t.me/yourusername" target="_blank" rel="noopener noreferrer" class="reveal group flex items-center gap-4 rounded-2xl border border-white/5 bg-ink-850/50 p-4 backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/30" data-delay="2">
+                <span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-cyan-400/10 text-cyan-300 ring-1 ring-inset ring-cyan-400/20">
+                  <svg class="h-5 w-5"><use href="#i-telegram" /></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Telegram</span>
+                  <span class="block truncate text-sm font-semibold text-slate-200 transition group-hover:text-cyan-300">@yourusername</span>
+                </span>
+                <svg class="ml-auto h-4 w-4 shrink-0 text-slate-600 transition group-hover:translate-x-0.5 group-hover:text-cyan-400"><use href="#i-arrow-right" /></svg>
+              </a>
+            </div>
+
+            <div class="reveal mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 rounded-2xl border border-emerald-400/15 bg-emerald-400/[.04] p-4 font-mono text-[11px] text-slate-400" data-delay="3">
+              <span class="flex items-center gap-2"><span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 animate-pulseRing"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>Open to new projects</span>
+              <span>GMT+6 · Flexible hours</span>
+            </div>
+          </div>
+          <!-- Right: form -->
+          <div class="reveal lg:col-span-7" data-delay="2">
+            <form id="contactForm" novalidate class="border-gradient relative overflow-hidden rounded-3xl bg-ink-850/60 p-6 shadow-card backdrop-blur-xl sm:p-8">
+              <div class="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-emerald-500/10 blur-3xl"></div>
+
+              <div class="relative flex items-start justify-between gap-4">
+                <div>
+                  <h3 class="font-display text-xl font-bold text-white">Send a direct message</h3>
+                  <p class="mt-1 text-sm text-slate-400">Fill this in and your mail client opens with everything prefilled.</p>
+                </div>
+                <span class="hidden shrink-0 items-center gap-1.5 rounded-lg border border-emerald-400/20 bg-emerald-400/10 px-2.5 py-1 font-mono text-[10px] text-emerald-300 sm:inline-flex">
+                  <svg class="h-3 w-3"><use href="#i-check" /></svg> Secure
+                </span>
+              </div>
+
+              <div class="relative mt-7 grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label for="cf-name" class="block font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Your name <span class="text-emerald-400">*</span></label>
+                  <input id="cf-name" name="name" type="text" autocomplete="name" required placeholder="Jane Cooper"
+                    class="mt-2 w-full rounded-xl border border-white/10 bg-ink-900/70 px-3.5 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/25" />
+                  <p class="mt-1.5 hidden font-mono text-[11px] text-rose-400" data-error-for="cf-name"></p>
+                </div>
+
+                <div>
+                  <label for="cf-email" class="block font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Email <span class="text-emerald-400">*</span></label>
+                  <input id="cf-email" name="email" type="email" autocomplete="email" required placeholder="jane@company.com"
+                    class="mt-2 w-full rounded-xl border border-white/10 bg-ink-900/70 px-3.5 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/25" />
+                  <p class="mt-1.5 hidden font-mono text-[11px] text-rose-400" data-error-for="cf-email"></p>
+                </div>
+              </div>
+              <div class="relative mt-5">
+                <label for="cf-subject" class="block font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Subject</label>
+                <input id="cf-subject" name="subject" type="text" placeholder="Laravel API + dashboard build"
+                  class="mt-2 w-full rounded-xl border border-white/10 bg-ink-900/70 px-3.5 py-3 text-sm text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/25" />
+                <p class="mt-1.5 hidden font-mono text-[11px] text-rose-400" data-error-for="cf-subject"></p>
+              </div>
+
+              <div class="relative mt-5">
+                <div class="flex items-center justify-between">
+                  <label for="cf-message" class="block font-mono text-[10px] uppercase tracking-[.18em] text-slate-500">Message <span class="text-emerald-400">*</span></label>
+                  <span id="cf-count" class="font-mono text-[10px] text-slate-600">0 / 1200</span>
+                </div>
+                <textarea id="cf-message" name="message" rows="5" required maxlength="1200" placeholder="Tell me about the project, the stack, and your timeline…"
+                  class="mt-2 w-full resize-y rounded-xl border border-white/10 bg-ink-900/70 px-3.5 py-3 text-sm leading-relaxed text-slate-200 outline-none transition placeholder:text-slate-600 focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/25"></textarea>
+                <p class="mt-1.5 hidden font-mono text-[11px] text-rose-400" data-error-for="cf-message"></p>
+              </div>
+
+              <!-- Honeypot (spam trap) -->
+              <input type="text" name="company" tabindex="-1" autocomplete="off" class="absolute left-[-9999px] h-0 w-0 opacity-0" aria-hidden="true" />
+
+              <div class="relative mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <button type="submit" class="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-6 py-3.5 text-sm font-semibold text-ink-950 shadow-glow transition-transform duration-300 hover:scale-[1.03] active:scale-95 disabled:cursor-not-allowed disabled:opacity-70">
+                  <span data-submit-label>Send Message</span>
+                  <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"><use href="#i-send" /></svg>
+                </button>
+                <p class="font-mono text-[11px] text-slate-500">Or email <a href="mailto:hello@mithunhasan.dev" class="text-emerald-300 underline decoration-emerald-400/40 underline-offset-4 transition hover:text-emerald-200">hello@mithunhasan.dev</a></p>
+              </div>
+
+              <p id="formStatus" role="status" aria-live="polite" class="relative mt-4 hidden rounded-xl border px-4 py-3 text-sm"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- ================= FOOTER ================= -->
+  <footer class="relative border-t border-white/5 bg-ink-950/60">
+    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
+      <div class="grid gap-10 md:grid-cols-12">
+        <div class="md:col-span-5">
+          <a href="#home" class="group inline-flex items-center gap-3" aria-label="Mithun Hasan — back to top">
+            <span class="relative grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 font-display text-sm font-extrabold text-ink-950 shadow-glow">
+              MH
+              <span class="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/25"></span>
+            </span>
+            <span class="leading-tight">
+              <span class="block font-display text-sm font-bold tracking-wide text-white">Mithun Hasan</span>
+              <span class="block font-mono text-[10px] uppercase tracking-[.18em] text-emerald-400/80">PHP · Laravel · UI/UX</span>
+            </span>
+          </a>
+          <p class="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">
+            Full-stack web developer and UI/UX designer building scalable Laravel backends and interfaces people actually enjoy using.
+          </p>
+          <div class="mt-6 flex items-center gap-3">
+            <a href="https://github.com/your-username" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/40 hover:text-emerald-300">
+              <svg class="h-5 w-5"><use href="#i-github" /></svg>
+            </a>
+            <a href="https://linkedin.com/in/your-username" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/40 hover:text-emerald-300">
+              <svg class="h-5 w-5"><use href="#i-linkedin" /></svg>
+            </a>
+            <a href="mailto:hello@mithunhasan.dev" aria-label="Email" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/40 hover:text-emerald-300">
+              <svg class="h-5 w-5"><use href="#i-mail" /></svg>
+            </a>
+            <a href="https://wa.me/10000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-emerald-400/40 hover:text-emerald-300">
+              <svg class="h-5 w-5"><use href="#i-whatsapp" /></svg>
+            </a>
+          </div>
+        </div>
+
+        <nav class="md:col-span-4" aria-label="Footer">
+          <p class="font-mono text-[10px] uppercase tracking-[.2em] text-slate-500">Navigate</p>
+          <ul class="mt-4 grid grid-cols-2 gap-x-6 gap-y-2.5">
+            <li><a href="#home" class="text-sm text-slate-400 transition hover:text-emerald-300">Home</a></li>
+            <li><a href="#about" class="text-sm text-slate-400 transition hover:text-emerald-300">About</a></li>
+            <li><a href="#skills" class="text-sm text-slate-400 transition hover:text-emerald-300">Skills</a></li>
+            <li><a href="#projects" class="text-sm text-slate-400 transition hover:text-emerald-300">Projects</a></li>
+            <li><a href="#uiux" class="text-sm text-slate-400 transition hover:text-emerald-300">UI/UX</a></li>
+            <li><a href="#contact" class="text-sm text-slate-400 transition hover:text-emerald-300">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="md:col-span-3">
+          <p class="font-mono text-[10px] uppercase tracking-[.2em] text-slate-500">Based in</p>
+          <p class="mt-4 text-sm text-slate-400">Remote · Worldwide</p>
+          <p class="mt-1 font-mono text-[11px] text-slate-600">GMT+6 · Flexible hours</p>
+          <a href="#contact" class="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
+            Start a project <svg class="h-3.5 w-3.5"><use href="#i-arrow-right" /></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-10 flex flex-col gap-3 border-t border-white/5 pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <p class="font-mono text-[11px] text-slate-500">© <span id="year">2026</span> Mithun Hasan. All rights reserved.</p>
+        <p class="font-mono text-[11px] text-slate-600">Built with a Laravel mindset · Tailwind CSS · Vanilla JS</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= BACK TO TOP ================= -->
+  <button id="backToTop" type="button" aria-label="Back to top"
+    class="group fixed bottom-5 right-5 z-50 grid h-12 w-12 translate-y-4 place-items-center rounded-2xl border border-emerald-400/25 bg-ink-850/80 text-emerald-300 opacity-0 shadow-glow backdrop-blur-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-400/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400 sm:bottom-8 sm:right-8">
+    <svg class="h-5 w-5"><use href="#i-arrow-up" /></svg>
+  </button>
+
+  <script>
+    /* ============================================================
+       Portfolio interactions — vanilla JS, no dependencies
+       ============================================================ */
+    (function () {
+      'use strict';
+
+      const $ = (sel, root) => (root || document).querySelector(sel);
+      const $$ = (sel, root) => Array.prototype.slice.call((root || document).querySelectorAll(sel));
+      const reduceMotion = typeof window.matchMedia === 'function'
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+
+      /* ---------------- Mobile menu ---------------- */
+      const menuBtn = $('#menuBtn');
+      const mobileMenu = $('#mobileMenu');
+      const iconOpen = $('#menuIconOpen');
+      const iconClose = $('#menuIconClose');
+
+      function setMenu(open) {
+        if (!menuBtn || !mobileMenu) return;
+        mobileMenu.classList.toggle('hidden', !open);
+        if (iconOpen) iconOpen.classList.toggle('hidden', open);
+        if (iconClose) iconClose.classList.toggle('hidden', !open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      }
+
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function () {
+          setMenu(mobileMenu.classList.contains('hidden'));
+        });
+        $$('[data-mobile-link]').forEach(function (link) {
+          link.addEventListener('click', function () { setMenu(false); });
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') setMenu(false);
+        });
+        window.addEventListener('resize', function () {
+          if (window.innerWidth >= 1024) setMenu(false);
+        });
+      }
+
+      /* ---------------- Navbar / progress / back-to-top / scroll-spy ---------------- */
+      const navShell = $('#navShell');
+      const progressBar = $('#scrollProgress');
+      const backToTop = $('#backToTop');
+      const navLinks = $$('[data-nav]');
+      const sections = $$('main section[id]');
+
+      function onScroll() {
+        const y = window.pageYOffset || document.documentElement.scrollTop;
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = max > 0 ? Math.min(100, Math.max(0, (y / max) * 100)) : 0;
+
+        if (progressBar) progressBar.style.width = pct + '%';
+
+        if (navShell) {
+          const scrolled = y > 24;
+          navShell.classList.toggle('glass', scrolled);
+          navShell.classList.toggle('border-white/10', scrolled);
+          navShell.classList.toggle('shadow-card', scrolled);
+        }
+
+        if (backToTop) {
+          const show = y > 520;
+          backToTop.classList.toggle('opacity-0', !show);
+          backToTop.classList.toggle('translate-y-4', !show);
+          backToTop.classList.toggle('pointer-events-none', !show);
+        }
+
+        let current = sections.length ? sections[0].id : '';
+        sections.forEach(function (section) {
+          if (y >= section.offsetTop - 160) current = section.id;
+        });
+        navLinks.forEach(function (link) {
+          link.classList.toggle('is-active', link.getAttribute('href') === '#' + current);
+        });
+      }
+
+      let ticking = false;
+      window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(function () { onScroll(); ticking = false; });
+      }, { passive: true });
+
+      if (backToTop) {
+        backToTop.addEventListener('click', function () {
+          window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        });
+      }
+
+      window.addEventListener('load', onScroll);
+      onScroll();
+
+      /* ---------------- Scroll reveal ---------------- */
+      const revealEls = $$('.reveal');
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      } else {
+        const revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        revealEls.forEach(function (el) { revealObserver.observe(el); });
+      }
+
+      /* ---------------- Animated counters ---------------- */
+      const counters = $$('[data-count]');
+      function runCounter(el) {
+        const target = parseFloat(el.getAttribute('data-count')) || 0;
+        if (reduceMotion) { el.textContent = String(target); return; }
+        const duration = 1500;
+        const startTime = performance.now();
+        function frame(now) {
+          const t = Math.min(1, (now - startTime) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = String(Math.round(target * eased));
+          if (t < 1) window.requestAnimationFrame(frame);
+          else el.textContent = String(target);
+        }
+        window.requestAnimationFrame(frame);
+      }
+      if ('IntersectionObserver' in window) {
+        const counterObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              runCounter(entry.target);
+              counterObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.6 });
+        counters.forEach(function (el) { counterObserver.observe(el); });
+      } else {
+        counters.forEach(function (el) { el.textContent = el.getAttribute('data-count'); });
+      }
+
+      /* ---------------- Project filtering ---------------- */
+      const filterButtons = $$('.filter-btn');
+      const projectCards = $$('.project-card');
+      const emptyMessage = $('#projectEmpty');
+
+      filterButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const filter = btn.getAttribute('data-filter');
+          filterButtons.forEach(function (b) {
+            const active = b === btn;
+            b.classList.toggle('is-active', active);
+            b.setAttribute('aria-pressed', String(active));
+          });
+
+          let visibleCount = 0;
+          projectCards.forEach(function (card) {
+            const match = filter === 'all' || card.getAttribute('data-category') === filter;
+            card.classList.toggle('is-hidden', !match);
+            if (match) {
+              visibleCount++;
+              card.classList.remove('is-filtering');
+              void card.offsetWidth; /* restart animation */
+              card.classList.add('is-filtering');
+            }
+          });
+
+          if (emptyMessage) emptyMessage.classList.toggle('hidden', visibleCount !== 0);
+        });
+      });
+
+      /* ---------------- UI/UX preview tabs ---------------- */
+      const uiTabs = $$('.ui-tab');
+      const screenPanels = $$('[data-screen-panel]');
+      uiTabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          const screen = tab.getAttribute('data-screen');
+          uiTabs.forEach(function (t) {
+            const active = t === tab;
+            t.classList.toggle('is-active', active);
+            t.setAttribute('aria-selected', String(active));
+          });
+          screenPanels.forEach(function (panel) {
+            panel.classList.toggle('hidden', panel.getAttribute('data-screen-panel') !== screen);
+          });
+        });
+      });
+
+      /* ---------------- Demo toggle switch ---------------- */
+      const demoToggle = $('#demoToggle');
+      if (demoToggle) {
+        demoToggle.addEventListener('click', function () {
+          const on = demoToggle.getAttribute('aria-checked') !== 'true';
+          demoToggle.setAttribute('aria-checked', String(on));
+          demoToggle.classList.toggle('bg-emerald-400', on);
+          demoToggle.classList.toggle('bg-white/10', !on);
+          const knob = demoToggle.firstElementChild;
+          if (knob) {
+            knob.classList.toggle('translate-x-5', on);
+            knob.classList.toggle('bg-ink-950', on);
+          }
+        });
+      }
+
+      /* ---------------- Contact form ---------------- */
+      const form = $('#contactForm');
+      const statusEl = $('#formStatus');
+      const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+      const CONTACT_EMAIL = 'hello@mithunhasan.dev';
+
+      function setFieldError(input, message) {
+        if (!input) return;
+        const errEl = document.querySelector('[data-error-for="' + input.id + '"]');
+        if (errEl) {
+          errEl.textContent = message || '';
+          errEl.classList.toggle('hidden', !message);
+        }
+        input.setAttribute('aria-invalid', message ? 'true' : 'false');
+        input.classList.toggle('border-rose-400/60', Boolean(message));
+        input.classList.toggle('border-white/10', !message);
+      }
+
+      function setStatus(message, type) {
+        if (!statusEl) return;
+        statusEl.textContent = message;
+        statusEl.classList.remove(
+          'hidden', 'border-emerald-400/25', 'bg-emerald-400/10', 'text-emerald-300',
+          'border-rose-400/25', 'bg-rose-400/10', 'text-rose-300'
+        );
+        if (type === 'success') statusEl.classList.add('border-emerald-400/25', 'bg-emerald-400/10', 'text-emerald-300');
+        else statusEl.classList.add('border-rose-400/25', 'bg-rose-400/10', 'text-rose-300');
+      }
+
+      const messageInput = $('#cf-message');
+      const messageCount = $('#cf-count');
+      if (messageInput && messageCount) {
+        const syncCount = function () {
+          messageCount.textContent = messageInput.value.length + ' / 1200';
+        };
+        messageInput.addEventListener('input', syncCount);
+        syncCount();
+      }
+
+      if (form) {
+        ['#cf-name', '#cf-email', '#cf-message'].forEach(function (sel) {
+          const input = $(sel);
+          if (input) {
+            input.addEventListener('input', function () {
+              if (input.getAttribute('aria-invalid') === 'true') setFieldError(input, '');
+            });
+          }
+        });
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+
+          const nameEl = $('#cf-name');
+          const emailEl = $('#cf-email');
+          const subjectEl = $('#cf-subject');
+          const name = nameEl ? nameEl.value.trim() : '';
+          const email = emailEl ? emailEl.value.trim() : '';
+          const subject = subjectEl ? subjectEl.value.trim() : '';
+          const message = messageInput ? messageInput.value.trim() : '';
+
+          let valid = true;
+          if (name.length < 2) { setFieldError(nameEl, 'Please enter your name.'); valid = false; }
+          else setFieldError(nameEl, '');
+
+          if (!EMAIL_RE.test(email)) { setFieldError(emailEl, 'Enter a valid email address.'); valid = false; }
+          else setFieldError(emailEl, '');
+
+          if (message.length < 10) { setFieldError(messageInput, 'Tell me a little more — at least 10 characters.'); valid = false; }
+          else setFieldError(messageInput, '');
+
+          if (!valid) {
+            setStatus('Please fix the highlighted fields and try again.', 'error');
+            const firstInvalid = form.querySelector('[aria-invalid="true"]');
+            if (firstInvalid) firstInvalid.focus();
+            return;
+          }
+
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const submitLabel = form.querySelector('[data-submit-label]');
+          const body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+          const mailto = 'mailto:' + CONTACT_EMAIL
+            + '?subject=' + encodeURIComponent(subject || ('New project enquiry from ' + name))
+            + '&body=' + encodeURIComponent(body);
+
+          setStatus('Thanks, ' + name + '! Your mail client is opening now — if nothing happens, email ' + CONTACT_EMAIL + '.', 'success');
+
+          if (submitBtn) submitBtn.disabled = true;
+          if (submitLabel) submitLabel.textContent = 'Opening mail client…';
+
+          window.location.href = mailto;
+
+          window.setTimeout(function () {
+            if (submitBtn) submitBtn.disabled = false;
+            if (submitLabel) submitLabel.textContent = 'Send Message';
+          }, 2800);
+        });
+      }
+
+      /* ---------------- Footer year ---------------- */
+      const yearEl = $('#year');
+      if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+    })();
+  </script>
+</body>
+
+</html>
