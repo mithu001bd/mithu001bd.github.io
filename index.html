@@ -91,6 +91,11 @@
     };
   </script>
   <style>
+    /* Alpine.js: keep cloaked elements hidden until Alpine initializes */
+    [x-cloak] {
+      display: none !important;
+    }
+
     :root {
       color-scheme: dark;
     }
@@ -278,23 +283,7 @@
       animation-play-state: paused;
     }
 
-    /* Project filters */
-    .filter-btn.is-active {
-      background-image: linear-gradient(90deg, #34d399, #2dd4bf);
-      color: #05080f;
-      font-weight: 600;
-      border-color: transparent;
-      box-shadow: 0 10px 30px -12px rgba(16, 185, 129, .7);
-    }
-
-    .project-card.is-hidden {
-      display: none;
-    }
-
-    .project-card.is-filtering {
-      animation: cardIn .5s cubic-bezier(.16, 1, .3, 1) both;
-    }
-
+    /* Project card entrance animation (driven by `#projectGrid .project-card`) */
     @keyframes cardIn {
       from {
         opacity: 0;
@@ -304,6 +293,19 @@
       to {
         opacity: 1;
         transform: none;
+      }
+    }
+
+    /* Alpine-rendered project cards: staggered entrance.
+       `backwards` fill (not `both`) so x-show transitions keep working
+       after the entrance animation finishes. */
+    #projectGrid .project-card {
+      animation: cardIn .55s cubic-bezier(.16, 1, .3, 1) backwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #projectGrid .project-card {
+        animation: none !important;
       }
     }
 
@@ -1099,332 +1101,267 @@
               Production systems built end to end — where backend architecture decisions meet real product requirements.
             </p>
           </div>
-          <div class="reveal flex flex-wrap gap-2" id="projectFilters" data-delay="2" role="tablist"
-            aria-label="Filter projects">
-            <button type="button"
-              class="filter-btn is-active rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
-              data-filter="all" aria-pressed="true">All</button>
-            <button type="button"
-              class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
-              data-filter="fintech" aria-pressed="false">Fintech</button>
-            <button type="button"
-              class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
-              data-filter="gaming" aria-pressed="false">Gaming</button>
-            <button type="button"
-              class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
-              data-filter="commerce" aria-pressed="false">E-commerce</button>
-            <button type="button"
-              class="filter-btn rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-slate-300 transition hover:border-emerald-400/40 hover:text-white"
-              data-filter="saas" aria-pressed="false">SaaS</button>
+        </div>
+
+        <div x-data="projectExplorer()">
+          <noscript>
+            <p class="rounded-2xl border border-white/10 bg-ink-850/40 p-6 text-center text-sm text-slate-400">
+              Enable JavaScript to search, filter and browse the project showcase.
+            </p>
+          </noscript>
+
+          <!-- Instant search -->
+          <div class="relative">
+            <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+            <input type="text" x-model="search" autocomplete="off" spellcheck="false"
+              aria-label="Search projects"
+              placeholder="Search project by name or tech stack (e.g., E-Commerce, Bangla, Laravel)..."
+              class="w-full rounded-2xl border border-white/10 bg-ink-850/60 py-3.5 pl-12 pr-11 text-sm text-slate-200 shadow-card backdrop-blur transition duration-300 placeholder:text-slate-500 focus:border-cyan-400/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/20" />
+            <button type="button" x-show="search.length > 0" x-cloak @click="search = ''" aria-label="Clear search"
+              class="absolute right-3 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full bg-white/5 text-slate-400 transition hover:bg-cyan-400/15 hover:text-cyan-300">
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round">
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Filter pills with live count badges -->
+          <div class="mt-5 flex flex-wrap items-center gap-2" role="group" aria-label="Filter projects">
+            <template x-for="f in filters" :key="f.key">
+              <button type="button" @click="setFilter(f.key)" :aria-pressed="activeFilter === f.key"
+                class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition duration-300"
+                :class="activeFilter === f.key
+                  ? 'border-cyan-400/70 bg-cyan-400/15 text-cyan-200 shadow-[0_0_18px_rgba(34,211,238,0.25)]'
+                  : 'border-white/10 bg-white/5 text-slate-300 hover:-translate-y-0.5 hover:border-cyan-400/40 hover:text-white'">
+                <span x-text="f.label"></span>
+                <span class="rounded-full px-1.5 py-0.5 font-mono text-[10px] leading-none transition"
+                  :class="activeFilter === f.key ? 'bg-cyan-400/25 text-cyan-100' : 'bg-white/10 text-slate-400'"
+                  x-text="countFor(f.key)"></span>
+              </button>
+            </template>
+          </div>
+
+          <!-- E-Commerce sub-tags -->
+          <div x-show="activeFilter === 'ecommerce'" x-cloak x-transition.opacity.duration.150ms
+            class="mt-3 flex flex-wrap items-center gap-2">
+            <span class="font-mono text-[10px] uppercase tracking-[.2em] text-slate-500">Store type</span>
+            <template x-for="s in ecommerceSubs" :key="s.key">
+              <button type="button" @click="toggleSub(s.key)"
+                class="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-medium transition duration-300"
+                :class="(s.key === 'all' ? activeSub === null : activeSub === s.key)
+                  ? 'border-cyan-400/60 bg-cyan-400/10 text-cyan-200 shadow-[0_0_14px_rgba(34,211,238,0.2)]'
+                  : 'border-white/10 bg-white/[.03] text-slate-400 hover:border-cyan-400/40 hover:text-white'">
+                <span x-text="s.label"></span>
+                <span class="font-mono text-[10px] opacity-70" x-text="subCount(s.key)"></span>
+              </button>
+            </template>
+          </div>
+
+          <!-- Project grid -->
+          <div id="projectGrid" class="mt-8 grid gap-6 md:grid-cols-2">
+
+            <template x-for="(project, index) in projects" :key="project.title">
+              <article x-show="isVisible(project)" x-cloak
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-3 scale-[.97]"
+                x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                class="project-card group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30"
+                :style="'animation-delay: ' + (index * 80) + 'ms'">
+                <!-- Decorative header: per-category mock -->
+                <div class="relative h-44 overflow-hidden border-b border-white/5"
+                  :class="{
+                    'bg-gradient-to-br from-cyan-500/15 via-ink-800 to-emerald-500/10': project.category === 'ecommerce',
+                    'bg-gradient-to-br from-emerald-500/15 via-ink-800 to-cyan-500/10': project.category === 'fintech',
+                    'bg-gradient-to-br from-emerald-500/15 via-ink-800 to-teal-500/10': project.category === 'saas',
+                    'bg-gradient-to-br from-teal-500/15 via-ink-800 to-emerald-500/10': project.category === 'gaming',
+                    'bg-gradient-to-br from-teal-500/15 via-ink-800 to-cyan-500/10': project.category === 'uiux'
+                  }">
+                  <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
+                  <template x-if="project.category === 'ecommerce'">
+                    <div class="absolute inset-x-5 top-5 grid grid-cols-3 gap-2">
+                      <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
+                        <div class="h-8 rounded bg-gradient-to-br from-emerald-400/30 to-teal-500/20"></div>
+                        <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
+                        <div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div>
+                      </div>
+                      <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
+                        <div class="h-8 rounded bg-gradient-to-br from-cyan-400/30 to-emerald-500/20"></div>
+                        <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
+                        <div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div>
+                      </div>
+                      <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
+                        <div class="h-8 rounded bg-gradient-to-br from-teal-400/30 to-cyan-500/20"></div>
+                        <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
+                        <div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div>
+                      </div>
+                    </div>
+                  </template>
+                  <template x-if="project.category === 'fintech'">
+                    <div class="absolute inset-x-6 bottom-0 flex h-28 items-end gap-2">
+                      <span
+                        class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                        style="height:42%"></span>
+                      <span
+                        class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                        style="height:68%"></span>
+                      <span
+                        class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                        style="height:35%"></span>
+                      <span
+                        class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                        style="height:84%"></span>
+                      <span
+                        class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                        style="height:58%"></span>
+                      <span
+                        class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                        style="height:96%"></span>
+                      <span
+                        class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
+                        style="height:72%"></span>
+                    </div>
+                  </template>
+                  <template x-if="project.category === 'saas'">
+                    <div class="absolute inset-x-0 top-4 flex flex-col items-center">
+                      <div class="relative h-24 w-24">
+                        <svg class="h-24 w-24 -rotate-90" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(148,163,184,0.18)"
+                            stroke-width="10" />
+                          <circle cx="50" cy="50" r="40" fill="none" stroke-width="10" stroke-linecap="round"
+                            stroke-dasharray="251" stroke-dashoffset="70" :stroke="'url(#donutGrad-' + index + ')'" />
+                          <defs>
+                            <linearGradient :id="'donutGrad-' + index" x1="0" y1="0" x2="1" y2="1">
+                              <stop offset="0%" stop-color="#34d399" />
+                              <stop offset="100%" stop-color="#22d3ee" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <span
+                          class="absolute inset-0 grid place-items-center font-display text-lg font-bold text-white">72%</span>
+                      </div>
+                      <div class="mt-2 flex gap-2">
+                        <span class="h-1.5 w-10 rounded bg-emerald-400/50"></span>
+                        <span class="h-1.5 w-14 rounded bg-white/15"></span>
+                      </div>
+                    </div>
+                  </template>
+                  <template x-if="project.category === 'gaming'">
+                    <div class="absolute inset-x-5 top-5 space-y-2">
+                      <div
+                        class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
+                        <span class="flex items-center gap-2 text-[11px] text-slate-300"><span
+                            class="relative flex h-1.5 w-1.5"><span
+                              class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 animate-pulseRing"></span><span
+                              class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span></span>Wolves vs
+                          Eagles</span>
+                        <span class="font-mono text-[11px] font-medium text-emerald-300">1.84</span>
+                      </div>
+                      <div
+                        class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
+                        <span class="flex items-center gap-2 text-[11px] text-slate-300"><span
+                            class="relative flex h-1.5 w-1.5"><span
+                              class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 animate-pulseRing"></span><span
+                              class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span></span>Titans vs
+                          Royals</span>
+                        <span class="font-mono text-[11px] font-medium text-emerald-300">2.07</span>
+                      </div>
+                      <div
+                        class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
+                        <span class="flex items-center gap-2 text-[11px] text-slate-300">Wallet Settlement</span>
+                        <span class="font-mono text-[11px] font-medium text-cyan-300">+0.42s</span>
+                      </div>
+                    </div>
+                  </template>
+                  <template x-if="project.category === 'uiux'">
+                    <div class="absolute inset-x-5 top-5 grid grid-cols-4 gap-2">
+                      <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
+                        <div class="h-8 rounded bg-gradient-to-br from-emerald-400/50 to-emerald-500/10"></div>
+                        <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
+                        <div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div>
+                      </div>
+                      <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
+                        <div class="h-8 rounded bg-gradient-to-br from-teal-400/50 to-teal-500/10"></div>
+                        <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
+                        <div class="mt-1 h-1.5 w-1/2 rounded bg-teal-400/40"></div>
+                      </div>
+                      <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
+                        <div class="h-8 rounded bg-gradient-to-br from-cyan-400/50 to-cyan-500/10"></div>
+                        <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
+                        <div class="mt-1 h-1.5 w-1/2 rounded bg-cyan-400/40"></div>
+                      </div>
+                      <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
+                        <div class="grid h-8 place-items-center rounded bg-gradient-to-br from-slate-300/40 to-slate-500/10">
+                          <span class="font-display text-sm font-bold text-white">Aa</span>
+                        </div>
+                        <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
+                        <div class="mt-1 h-1.5 w-1/2 rounded bg-slate-300/40"></div>
+                      </div>
+                    </div>
+                  </template>
+                  <span
+                    class="rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur"
+                    :class="project.category === 'fintech' ? 'absolute left-4 top-4' : 'absolute left-4 bottom-4'"
+                    x-text="categoryLabel(project.category)"></span>
+                  <span x-show="project.category === 'fintech'"
+                    class="absolute right-4 top-4 rounded-lg bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] text-slate-400 backdrop-blur">$2.4M
+                    / mo</span>
+                  <span x-show="project.featured"
+                    class="absolute right-4 bottom-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">Featured</span>
+                </div>
+
+                <!-- Card body -->
+                <div class="flex flex-1 flex-col p-6">
+                  <div class="flex items-start justify-between gap-3">
+                    <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300"
+                      x-text="project.title"></h3>
+                    <span class="shrink-0 font-mono text-[11px] text-slate-500" x-text="project.year"></span>
+                  </div>
+                  <span
+                    class="mt-2 self-start rounded-lg border border-cyan-400/25 bg-cyan-400/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.14em] text-cyan-300"
+                    x-text="project.subcategory"></span>
+                  <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400" x-text="project.description"></p>
+                  <ul class="mt-4 flex flex-wrap gap-2">
+                    <template x-for="tag in project.tags" :key="tag">
+                      <li class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300"
+                        x-text="tag"></li>
+                    </template>
+                  </ul>
+                  <div class="mt-6 flex flex-wrap gap-2">
+                    <a :href="project.liveUrl" target="_blank" rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
+                      Live Demo <svg class="h-3.5 w-3.5">
+                        <use href="#i-external" />
+                      </svg>
+                    </a>
+                    <a :href="project.repoUrl" target="_blank" rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
+                      <svg class="h-3.5 w-3.5">
+                        <use href="#i-github" />
+                      </svg> GitHub
+                    </a>
+                  </div>
+                </div>
+              </article>
+            </template>
+
+            <!-- Empty state -->
+            <div x-show="visibleCount() === 0" x-cloak x-transition.opacity.duration.200ms
+              class="rounded-3xl border border-dashed border-white/10 bg-ink-850/40 px-6 py-14 text-center md:col-span-2">
+              <p class="font-display text-base font-semibold text-slate-300">No projects found matching your search.
+                More demo projects coming soon!</p>
+            </div>
           </div>
         </div>
-
-        <div id="projectGrid" class="mt-12 grid gap-6 md:grid-cols-2">
-          <!-- Project 1 -->
-          <article
-            class="project-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30"
-            data-category="fintech">
-            <div
-              class="relative h-44 overflow-hidden border-b border-white/5 bg-gradient-to-br from-emerald-500/15 via-ink-800 to-cyan-500/10">
-              <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
-              <div class="absolute inset-x-6 bottom-0 flex h-28 items-end gap-2">
-                <span
-                  class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
-                  style="height:42%"></span>
-                <span
-                  class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
-                  style="height:68%"></span>
-                <span
-                  class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
-                  style="height:35%"></span>
-                <span
-                  class="w-full rounded-t-md bg-gradient-to-t from-emerald-500/50 to-emerald-400/20 transition-all duration-500 group-hover:from-emerald-400/80"
-                  style="height:84%"></span>
-                <span
-                  class="w-full rounded-t-md bg-gradient-to-t from-cyan-500/50 to-cyan-400/20 transition-all duration-500 group-hover:from-cyan-400/80"
-                  style="height:58%"></span>
-                <span
-                  class="w-full rounded-t-md bg-gradient-to-t from-cyan-500/50 to-cyan-400/20 transition-all duration-500 group-hover:from-cyan-400/80"
-                  style="height:96%"></span>
-                <span
-                  class="w-full rounded-t-md bg-gradient-to-t from-cyan-500/50 to-cyan-400/20 transition-all duration-500 group-hover:from-cyan-400/80"
-                  style="height:72%"></span>
-              </div>
-              <span
-                class="absolute left-4 top-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">Fintech</span>
-              <span
-                class="absolute right-4 top-4 rounded-lg bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] text-slate-400 backdrop-blur">$2.4M
-                / mo</span>
-            </div>
-            <div class="flex flex-1 flex-col p-6">
-              <div class="flex items-start justify-between gap-3">
-                <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300">Enterprise
-                  ERP &amp; Fintech Suite</h3>
-                <span class="shrink-0 font-mono text-[11px] text-slate-500">2024</span>
-              </div>
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
-                Multi-tenant ERP with a double-entry ledger, automated invoicing, granular roles &amp; permissions, and
-                a fully auditable transaction history.
-              </p>
-              <ul class="mt-4 flex flex-wrap gap-2">
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Laravel</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  MySQL</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Redis</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Tailwind</li>
-              </ul>
-              <div class="mt-6 flex flex-wrap gap-2">
-                <a href="#"
-                  class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
-                  Live Demo
-                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 4h6v6" />
-                    <path d="M20 4 10 14" />
-                    <path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4" />
-                  </svg>
-                </a>
-                <a href="https://github.com/mithu001bd" target="_blank" rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
-                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                      d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                  </svg>
-                  GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-          <!-- Project 2 -->
-          <article
-            class="project-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30"
-            data-category="gaming" data-delay="1">
-            <div
-              class="relative h-44 overflow-hidden border-b border-white/5 bg-gradient-to-br from-teal-500/15 via-ink-800 to-emerald-500/10">
-              <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
-              <div class="absolute inset-x-5 top-5 space-y-2">
-                <div
-                  class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
-                  <span class="flex items-center gap-2 text-[11px] text-slate-300"><span
-                      class="relative flex h-1.5 w-1.5"><span
-                        class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 animate-pulseRing"></span><span
-                        class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span></span>Wolves vs
-                    Eagles</span>
-                  <span class="font-mono text-[11px] font-medium text-emerald-300">1.84</span>
-                </div>
-                <div
-                  class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
-                  <span class="flex items-center gap-2 text-[11px] text-slate-300"><span
-                      class="relative flex h-1.5 w-1.5"><span
-                        class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 animate-pulseRing"></span><span
-                        class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span></span>Titans vs
-                    Royals</span>
-                  <span class="font-mono text-[11px] font-medium text-emerald-300">2.07</span>
-                </div>
-                <div
-                  class="flex items-center justify-between rounded-lg border border-white/10 bg-ink-950/70 px-3 py-2 backdrop-blur">
-                  <span class="flex items-center gap-2 text-[11px] text-slate-300">Wallet Settlement</span>
-                  <span class="font-mono text-[11px] font-medium text-cyan-300">+0.42s</span>
-                </div>
-              </div>
-              <span
-                class="absolute left-4 bottom-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">Gaming</span>
-            </div>
-            <div class="flex flex-1 flex-col p-6">
-              <div class="flex items-start justify-between gap-3">
-                <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300">Gaming
-                  &amp; Betting Platform</h3>
-                <span class="shrink-0 font-mono text-[11px] text-slate-500">2025</span>
-              </div>
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
-                Real-time odds feed with a seamless wallet integration — idempotent balance updates, queued settlement
-                jobs and full transaction reconciliation.
-              </p>
-              <ul class="mt-4 flex flex-wrap gap-2">
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Laravel</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  WebSockets</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Redis</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  MySQL</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Tailwind</li>
-              </ul>
-              <div class="mt-6 flex flex-wrap gap-2">
-                <a href="#"
-                  class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
-                  Live Demo <svg class="h-3.5 w-3.5">
-                    <use href="#i-external" />
-                  </svg>
-                </a>
-                <a href="https://github.com/mithu001bd" target="_blank" rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
-                  <svg class="h-3.5 w-3.5">
-                    <use href="#i-github" />
-                  </svg> GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-          <!-- Project 3 -->
-          <article
-            class="project-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30"
-            data-category="commerce" data-delay="2">
-            <div
-              class="relative h-44 overflow-hidden border-b border-white/5 bg-gradient-to-br from-cyan-500/15 via-ink-800 to-emerald-500/10">
-              <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
-              <div class="absolute inset-x-5 top-5 grid grid-cols-3 gap-2">
-                <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
-                  <div class="h-8 rounded bg-gradient-to-br from-emerald-400/30 to-teal-500/20"></div>
-                  <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
-                  <div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div>
-                </div>
-                <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
-                  <div class="h-8 rounded bg-gradient-to-br from-cyan-400/30 to-emerald-500/20"></div>
-                  <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
-                  <div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div>
-                </div>
-                <div class="rounded-lg border border-white/10 bg-ink-950/70 p-2.5 backdrop-blur">
-                  <div class="h-8 rounded bg-gradient-to-br from-teal-400/30 to-cyan-500/20"></div>
-                  <div class="mt-2 h-1.5 w-3/4 rounded bg-white/15"></div>
-                  <div class="mt-1 h-1.5 w-1/2 rounded bg-emerald-400/40"></div>
-                </div>
-              </div>
-              <span
-                class="absolute left-4 bottom-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">E-commerce</span>
-            </div>
-            <div class="flex flex-1 flex-col p-6">
-              <div class="flex items-start justify-between gap-3">
-                <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300">E-commerce
-                  &amp; Booking System</h3>
-                <span class="shrink-0 font-mono text-[11px] text-slate-500">2024</span>
-              </div>
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
-                Multi-vendor storefront combined with slot-based booking — inventory reservation, coupon engine, Stripe
-                checkout and invoice PDFs.
-              </p>
-              <ul class="mt-4 flex flex-wrap gap-2">
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Laravel</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Livewire</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Stripe</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  PostgreSQL</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Tailwind</li>
-              </ul>
-              <div class="mt-6 flex flex-wrap gap-2">
-                <a href="https://mithu001bd.github.io/commerce-demo" target="_blank" rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
-                  Live Demo <svg class="h-3.5 w-3.5">
-                    <use href="#i-external" />
-                  </svg>
-                </a>
-                <a href="https://github.com/mithu001bd" target="_blank" rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
-                  <svg class="h-3.5 w-3.5">
-                    <use href="#i-github" />
-                  </svg> GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-          <!-- Project 4 -->
-          <article
-            class="project-card reveal group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-ink-850/50 shadow-card backdrop-blur-xl transition duration-300 hover:-translate-y-1.5 hover:border-emerald-400/30"
-            data-category="saas" data-delay="3">
-            <div
-              class="relative h-44 overflow-hidden border-b border-white/5 bg-gradient-to-br from-emerald-500/15 via-ink-800 to-teal-500/10">
-              <div class="absolute inset-0 bg-grid-dark bg-grid opacity-40"></div>
-              <div class="absolute inset-x-0 top-5 flex items-center justify-center">
-                <div class="relative h-24 w-24">
-                  <svg viewBox="0 0 100 100" class="h-full w-full -rotate-90">
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(148,163,184,.18)" stroke-width="10" />
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="url(#donutGrad)" stroke-width="10"
-                      stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="70"
-                      class="transition-all duration-700 group-hover:[stroke-dashoffset:45]" />
-                    <defs>
-                      <linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#34d399" />
-                        <stop offset="100%" stop-color="#22d3ee" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <span
-                    class="absolute inset-0 grid place-items-center font-display text-lg font-bold text-white">72%</span>
-                </div>
-              </div>
-              <span
-                class="absolute left-4 bottom-4 rounded-lg border border-emerald-400/25 bg-ink-950/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[.18em] text-emerald-300 backdrop-blur">SaaS</span>
-            </div>
-            <div class="flex flex-1 flex-col p-6">
-              <div class="flex items-start justify-between gap-3">
-                <h3 class="font-display text-xl font-bold text-white transition group-hover:text-emerald-300">
-                  Multi-tenant SaaS Billing</h3>
-                <span class="shrink-0 font-mono text-[11px] text-slate-500">2025</span>
-              </div>
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
-                Subscription platform with tiered plans, Laravel Cashier billing, usage metering, webhook sync and a
-                customer-facing billing portal.
-              </p>
-              <ul class="mt-4 flex flex-wrap gap-2">
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Laravel</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Cashier</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Stripe</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Redis</li>
-                <li
-                  class="rounded-lg border border-white/10 bg-white/[.03] px-2.5 py-1 font-mono text-[11px] text-slate-300">
-                  Docker</li>
-              </ul>
-              <div class="mt-6 flex flex-wrap gap-2">
-                <a href="#"
-                  class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-emerald-400 to-teal-500 px-4 py-2.5 text-xs font-semibold text-ink-950 transition-transform duration-300 hover:scale-[1.03] active:scale-95">
-                  Live Demo <svg class="h-3.5 w-3.5">
-                    <use href="#i-external" />
-                  </svg>
-                </a>
-                <a href="https://github.com/mithu001bd" target="_blank" rel="noopener noreferrer"
-                  class="inline-flex items-center gap-2 rounded-xl border border-white/12 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition duration-300 hover:border-emerald-400/40 hover:bg-emerald-400/10">
-                  <svg class="h-3.5 w-3.5">
-                    <use href="#i-github" />
-                  </svg> GitHub
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <p id="projectEmpty" class="mt-10 hidden text-center font-mono text-sm text-slate-500">No projects in this
-          category yet.</p>
       </div>
     </section>
     <!-- ================= UI/UX SHOWCASE ================= -->
@@ -2077,36 +2014,6 @@
         counters.forEach(function (el) { el.textContent = el.getAttribute('data-count'); });
       }
 
-      /* ---------------- Project filtering ---------------- */
-      const filterButtons = $$('.filter-btn');
-      const projectCards = $$('.project-card');
-      const emptyMessage = $('#projectEmpty');
-
-      filterButtons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          const filter = btn.getAttribute('data-filter');
-          filterButtons.forEach(function (b) {
-            const active = b === btn;
-            b.classList.toggle('is-active', active);
-            b.setAttribute('aria-pressed', String(active));
-          });
-
-          let visibleCount = 0;
-          projectCards.forEach(function (card) {
-            const match = filter === 'all' || card.getAttribute('data-category') === filter;
-            card.classList.toggle('is-hidden', !match);
-            if (match) {
-              visibleCount++;
-              card.classList.remove('is-filtering');
-              void card.offsetWidth; /* restart animation */
-              card.classList.add('is-filtering');
-            }
-          });
-
-          if (emptyMessage) emptyMessage.classList.toggle('hidden', visibleCount !== 0);
-        });
-      });
-
       /* ---------------- UI/UX preview tabs ---------------- */
       const uiTabs = $$('.ui-tab');
       const screenPanels = $$('[data-screen-panel]');
@@ -2243,6 +2150,163 @@
       if (yearEl) yearEl.textContent = String(new Date().getFullYear());
     })();
   </script>
+
+  <!-- ================= ALPINE.JS: PROJECT EXPLORER ================= -->
+  <!-- Plain global function (defined before the deferred Alpine CDN script
+       below runs) so it is ready when Alpine boots the x-data scope. -->
+  <script>
+    function projectExplorer() {
+      return {
+        search: '',
+        activeFilter: 'all',
+        activeSub: null,
+        projects: [
+          {
+            title: 'ApexMart E-Commerce Platform',
+            category: 'ecommerce',
+            subcategory: 'Full-Stack Store / Global',
+            subTags: ['bangla', 'global'],
+            year: '2025',
+            featured: true,
+            description: 'Bilingual storefront — Bangla Shop and Global Mart — with cart, checkout, order tracking, inventory and a full admin dashboard.',
+            tags: ['Laravel', 'MySQL', 'Tailwind CSS', 'SSLCommerz', 'REST API'],
+            liveUrl: 'https://mithu001bd.github.io/commerce-demo/',
+            repoUrl: 'https://github.com/mithu001bd'
+          },
+          {
+            title: 'FinCore ERP — Enterprise & Fintech Suite',
+            category: 'fintech',
+            subcategory: 'Enterprise ERP / FinTech',
+            subTags: [],
+            year: '2025',
+            featured: false,
+            description: 'Multi-currency ledger, invoicing, payroll and expense workflows with real-time financial reporting.',
+            tags: ['Laravel', 'PostgreSQL', 'Redis', 'Queues', 'Chart.js'],
+            liveUrl: 'https://mithu001bd.github.io/fintech-erp-deomo/',
+            repoUrl: 'https://github.com/mithu001bd'
+          },
+          {
+            title: 'AcmeCloud — SaaS Subscription & Analytics',
+            category: 'saas',
+            subcategory: 'Subscription SaaS',
+            subTags: [],
+            year: '2025',
+            featured: false,
+            description: 'Multi-tenant subscription plans, metered usage analytics, team seats and a self-serve billing portal.',
+            tags: ['Laravel', 'Livewire', 'Stripe Billing', 'MySQL', 'Alpine.js'],
+            liveUrl: 'https://mithu001bd.github.io/saas-demo/',
+            repoUrl: 'https://github.com/mithu001bd'
+          },
+          {
+            title: 'Nexus Odds — Real-Time Gaming Arena',
+            category: 'gaming',
+            subcategory: 'Real-Time Gaming',
+            subTags: [],
+            year: '2024',
+            featured: false,
+            description: 'Live odds engine streaming markets over WebSockets with instant wallet settlement and full bet history.',
+            tags: ['Node.js', 'WebSockets', 'Redis', 'Laravel', 'Tailwind CSS'],
+            liveUrl: 'https://mithu001bd.github.io/gaming-demo/',
+            repoUrl: 'https://github.com/mithu001bd'
+          },
+          {
+            title: 'Atelier Design System & UI/UX Showcase',
+            category: 'uiux',
+            subcategory: 'UI/UX • Design System',
+            subTags: [],
+            year: '2025',
+            featured: false,
+            description: 'Production-grade design tokens, accessible colour palettes, typography scale and interaction prototypes.',
+            tags: ['Tailwind CSS', 'Alpine.js', 'Design Tokens', 'Micro-Interactions'],
+            liveUrl: 'https://mithu001bd.github.io/uiux-showcase/',
+            repoUrl: 'https://github.com/mithu001bd'
+          }
+        ],
+        filters: [
+          { key: 'all', label: 'All Projects' },
+          { key: 'ecommerce', label: 'E-Commerce' },
+          { key: 'fintech', label: 'FinTech / ERP' },
+          { key: 'saas', label: 'SaaS' },
+          { key: 'gaming', label: 'Gaming' },
+          { key: 'uiux', label: 'UI/UX' }
+        ],
+        ecommerceSubs: [
+          { key: 'all', label: 'All Stores' },
+          { key: 'bangla', label: 'Bangla Shop' },
+          { key: 'global', label: 'Global Mart' }
+        ],
+        categoryLabels: {
+          ecommerce: 'E-Commerce',
+          fintech: 'FinTech',
+          saas: 'SaaS',
+          gaming: 'Gaming',
+          uiux: 'UI/UX'
+        },
+        categoryLabel(key) {
+          return this.categoryLabels[key] || key;
+        },
+        subLabel(key) {
+          const sub = this.ecommerceSubs.find((item) => item.key === key);
+          return sub ? sub.label : key;
+        },
+        /* Search haystack: title, sub-category chip, technology tags and store labels. */
+        haystack(project) {
+          return [
+            project.title,
+            project.subcategory,
+            this.categoryLabel(project.category),
+            project.description,
+            project.tags.join(' '),
+            (project.subTags || []).map((key) => this.subLabel(key)).join(' ')
+          ]
+            .join(' ')
+            .toLowerCase();
+        },
+        setFilter(key) {
+          this.activeFilter = key;
+          if (key !== 'ecommerce') this.activeSub = null;
+        },
+        toggleSub(key) {
+          if (key === 'all') {
+            this.activeSub = null;
+            return;
+          }
+          this.activeSub = this.activeSub === key ? null : key;
+        },
+        matches(project) {
+          if (this.activeFilter !== 'all' && project.category !== this.activeFilter) return false;
+          if (
+            this.activeFilter === 'ecommerce' &&
+            this.activeSub &&
+            (project.subTags || []).indexOf(this.activeSub) === -1
+          ) {
+            return false;
+          }
+          const query = this.search.trim().toLowerCase();
+          if (!query) return true;
+          return this.haystack(project).indexOf(query) !== -1;
+        },
+        isVisible(project) {
+          return this.matches(project);
+        },
+        visibleCount() {
+          return this.projects.filter((project) => this.matches(project)).length;
+        },
+        countFor(key) {
+          if (key === 'all') return this.projects.length;
+          return this.projects.filter((project) => project.category === key).length;
+        },
+        subCount(key) {
+          const stores = this.projects.filter((project) => project.category === 'ecommerce');
+          if (key === 'all') return stores.length;
+          return stores.filter((project) => (project.subTags || []).indexOf(key) !== -1).length;
+        }
+      };
+    }
+  </script>
+
+  <!-- Alpine.js 3.17.4 (deferred: boots after the markup above is parsed) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js"></script>
 </body>
 
 </html>
